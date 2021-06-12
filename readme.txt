@@ -26,4 +26,4 @@ Each Coach after signup will be able to:
 I will use mongoDB as a DB.
 Auth in JWT + social logins
 
-Will save the email on json file
+Will save the email on json file..
