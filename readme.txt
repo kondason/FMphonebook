@@ -23,7 +23,30 @@ Each Coach after signup will be able to:
 - Delete his User
 - Add a post that is looking for a job
 
+    salary
+    profession
+    owner (User)
+    body
+    title
+    date
+    how to contact (email + phone)
+    Status
+
 I will use mongoDB as a DB.
 Auth in JWT + social logins
 
 Will save the email on json file..
+
+
+/*
+Todo RestAPI:
+
+1. JWT client server middlewhere
+
+*/
+
+404323068
+leledix614@paseacuba.com
+ib 69
+
+https://www.npmjs.com/package/i18n
