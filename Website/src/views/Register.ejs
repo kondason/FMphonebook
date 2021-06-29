@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/register.css">
+    <script type="text/javascript" src="scripts/register.js" defer></script>
+
+    <title>FMphonebook | Register</title>
+</head>
+
+<body>
+    <div class="main-container flex-row">
+        <div class="register-container flex-column">
+            <div class="register-form-logo">
+                <img src="images/logo2.png" />
+            </div>
+            <div class="register-form-header">
+                <h3>Create New Accont</h3>
+            </div>
+            <form action="/register/CreateUser" method="post" class="register-inputs-container flex-column">
+                <div class="register-inputs-row flex-row">
+                    <div class="register-form-input-container">
+                        <input type="email" class="register-form-input" placeholder="E-mail" name="Email">
+                    </div>
+                    <div class="register-form-input-container">
+                        <input type="password" class="register-form-input" placeholder="Password" name="Password">
+                    </div>
+                </div>
+
+                <div class="register-inputs-row flex-row">
+                    <div class="register-form-input-container">
+                        <input type="text" class="register-form-input" placeholder="First Name" name="FirstName">
+                    </div>
+                    <div class="register-form-input-container">
+                        <input type="text" class="register-form-input" placeholder="Last Name" name="LastName">
+                    </div>
+                </div>
+
+                <div class="register-inputs-row flex-row">
+                    <div class="register-form-input-container">
+                        <select id="profession-DD" class="register-form-input select-option" name="ProfessionID"
+                            onchange="ProfessionValueChange(this)">
+                            <option value=0>Select Profession</option>
+                            <% Professions.forEach(profession=>{ %>
+                                <option value=<%=profession.ProfessionID %>> <%=profession.Profession %>
+                                </option>
+                                <% }) %>
+                        </select>
+                    </div>
+                    <div class="register-form-input-container">
+                        <select class="register-form-input select-option" name="ClubID"
+                            onchange="ClubValueChange(this)">
+                            <option value=0>Select Club</option>
+                            <% Clubs.forEach(club=>{ %>
+                                <option value=<%=club.ClubID %>> <%=club.Club %>
+                                </option>
+                                <% }) %>
+                        </select>
+                    </div>
+                </div>
+                <div class="register-inputs-row flex-row">
+                    <div class="register-form-input-container hidden other-profession">
+                        <input type="text" class="register-form-input" placeholder="Other Profession" name="ProfessionOther">
+                    </div>
+
+                    <div class="register-form-input-container hidden other-club">
+                        <input type="text" class="register-form-input" placeholder="Other Club" name="ClubOther">
+                    </div>
+                </div>
+                <div class="register-form-remember-me normal-text flex-row">
+                    <input type="checkbox" name="cb-policeAndTerms">
+                    <label for="cb-policeAndTerms">i have read and agree to the <a href="" class="inline-anchor">
+                            Terms of Use</a> and <a href="" class="inline-anchor">Privacy Policy</a></label>
+                </div>
+                <div class="register-form-login-btn">
+                    <input type="submit" class="register-btn" name="policy" value="Register" />
+                </div>
+
+                <div class="register-form-divider flex-row">
+                    <div class="divider">
+                        <hr>
+                    </div>
+                    <div class="divider-text">
+                        Or Sign In With
+                    </div>
+                    <div class="divider">
+                        <hr>
+                    </div>
+                </div>
+                <div class="register-frm-socials flex-row">
+                    <div class="register-social-btn-container">
+                        <a href="/auth/facebook" class="register-social facebook">Log in with Facebook</a>
+                    </div>
+                    <div class="register-social-btn-container">
+                        <a href="/auth/google" class="register-social google">Log in with Google+</a>
+                    </div>
+                </div>
+                <div class="normal-text">
+                    Already have an account? <a href="/login" class="inline-anchor">Sign in</a>
+                </div>
+        </div>
+        </form>
+    </div>
+    </div>
+</body>
+
+</html>
