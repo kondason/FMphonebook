@@ -31,7 +31,7 @@ const CreateUser = async (loginTypeID,/* only for 3rd party users - Facebook or 
     {
         const response =
         {
-            "Status": 200,
+            "Status": 500,
             "Msg": "",
             "Data": ""
         };
@@ -46,6 +46,7 @@ const CreateUser = async (loginTypeID,/* only for 3rd party users - Facebook or 
 
         if (clubID == 6)
         {
+            
             clubID = await restApiDAL.CreateClub(clubOther);
         }
 
@@ -71,12 +72,18 @@ const CreateUser = async (loginTypeID,/* only for 3rd party users - Facebook or 
         };
 
         response.Data = await restApiDAL.CreateUser(userObject);
+        response.Status = 201;
+
         return response;
     } catch (error)
     {
         throw error;
     }
 };
+
+
+
+
 
 module.exports =
 {

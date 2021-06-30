@@ -36,9 +36,61 @@ const UpdateUserURLImage = async (imageURL, userID) =>
     }
 };
 
+const UpdateLoginTypeObjectID = async (loginTypeID,loginTypeObjectID,userID)=>
+{
+    try
+    {
+        const response = await restApiDAL.UpdateLoginTypeObjectID(loginTypeID,loginTypeObjectID,userID);
+        return response;
+    } catch (error)
+    {
+        throw error;
+    }
+};
+
+const GetUserIDByEmail = async (email)=>
+{
+    try
+    {
+        const response = await restApiDAL.GetUserIDByEmail(email);
+        return response;
+    } catch (error)
+    {
+        throw error;
+    }
+};
+
+const IsEmailExists = async (email) => 
+{
+    try
+    {
+        const result = await restApiDAL.IsEmailExists(email);
+        return result;
+    } catch (error)
+    {
+        throw error;
+    }
+};
+
+const GetUserIDAndPassByEmail = async (email) =>
+{
+    try
+    {
+        const result = await restApiDAL.GetUserIDAndPassByEmail(email);
+        return result;
+    } catch (error)
+    {
+        throw error;
+    }
+};
+
 module.exports =
 {
     GetUserByID,
     GetUserByLoginTypeObjectID,
-    UpdateUserURLImage
+    UpdateUserURLImage,
+    UpdateLoginTypeObjectID,
+    GetUserIDByEmail,
+    IsEmailExists,
+    GetUserIDAndPassByEmail
 };

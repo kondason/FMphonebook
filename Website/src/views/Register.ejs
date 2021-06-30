@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/register.css">
-    <script type="text/javascript" src="scripts/register.js" defer></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/register.css">
+    <script type="text/javascript" src="/scripts/register.js" defer></script>
 
     <title>FMphonebook | Register</title>
 </head>
@@ -16,65 +16,110 @@
     <div class="main-container flex-row">
         <div class="register-container flex-column">
             <div class="register-form-logo">
-                <img src="images/logo2.png" />
+                <img src="/images/logo2.png" />
             </div>
             <div class="register-form-header">
                 <h3>Create New Accont</h3>
             </div>
-            <form action="/register/CreateUser" method="post" class="register-inputs-container flex-column">
+            <form action="/register/" method="post" class="register-inputs-container flex-column" novalidate>
                 <div class="register-inputs-row flex-row">
-                    <div class="register-form-input-container">
-                        <input type="email" class="register-form-input" placeholder="E-mail" name="Email">
+                    <div class="register-form-input-container flex-column">
+                        <input type="email"
+                            class="register-form-input <%= Errors.find(e=>e.param=='Email') ? 'validation-error' : ''%>"
+                            placeholder="E-mail" name="Email" value="<%= OldInputs.Email %>">
+                        <div class="validation-error-text <%= Errors.find(e=>e.param=='Email') ? 'display-block' : 'hidden'%>"> <%= Errors.find(e=>e.param=='Email') ? Errors.find(e=>e.param=='Email').msg : '' %>
+                        </div>
                     </div>
                     <div class="register-form-input-container">
-                        <input type="password" class="register-form-input" placeholder="Password" name="Password">
+                        <input type="password"
+                            class="register-form-input <%= Errors.find(e=>e.param=='Password') ? 'validation-error' : ''%>"
+                            placeholder="Password" name="Password" value="<%= OldInputs.Password %>">
+                        <div
+                            class="validation-error-text <%= Errors.find(e=>e.param=='Password') ? 'display-block' : 'hidden'%>">
+                            <%= Errors.find(e=>e.param=='Password') ? Errors.find(e=>e.param=='Password').msg : '' %>
+                        </div>
                     </div>
                 </div>
 
                 <div class="register-inputs-row flex-row">
                     <div class="register-form-input-container">
-                        <input type="text" class="register-form-input" placeholder="First Name" name="FirstName">
+                        <input type="text"
+                            class="register-form-input <%= Errors.find(e=>e.param=='FirstName') ? 'validation-error' : ''%>"
+                            placeholder="First Name" name="FirstName" value="<%= OldInputs.FirstName %>">
+                        <div
+                            class="validation-error-text <%= Errors.find(e=>e.param=='FirstName') ? 'display-block' : 'hidden'%>">
+                            <%= Errors.find(e=>e.param=='FirstName') ? Errors.find(e=>e.param=='FirstName').msg : '' %>
+                        </div>
                     </div>
                     <div class="register-form-input-container">
-                        <input type="text" class="register-form-input" placeholder="Last Name" name="LastName">
+                        <input type="text"
+                            class="register-form-input <%= Errors.find(e=>e.param=='LastName') ? 'validation-error' : ''%>"
+                            placeholder="Last Name" name="LastName" value="<%= OldInputs.LastName %>">
+                        <div
+                            class="validation-error-text <%= Errors.find(e=>e.param=='LastName') ? 'display-block' : 'hidden'%>">
+                            <%= Errors.find(e=>e.param=='LastName') ? Errors.find(e=>e.param=='LastName').msg : '' %>
+                        </div>
                     </div>
                 </div>
 
                 <div class="register-inputs-row flex-row">
                     <div class="register-form-input-container">
-                        <select id="profession-DD" class="register-form-input select-option" name="ProfessionID"
-                            onchange="ProfessionValueChange(this)">
+                        <select id="profession-DD"
+                            class="register-form-input select-option <%= Errors.find(e=>e.param=='ProfessionID') ? 'validation-error' : ''%>"
+                            name="ProfessionID" onchange="ProfessionValueChange(this)">
                             <option value=0>Select Profession</option>
                             <% Professions.forEach(profession=>{ %>
-                                <option value=<%=profession.ProfessionID %>> <%=profession.Profession %>
+                                <option value=<%=profession.ProfessionID %>
+                                    <%= profession.ProfessionID==OldInputs.ProfessionID ? "selected" : "" %>>
+                                        <%=profession.Profession %>
                                 </option>
                                 <% }) %>
                         </select>
+                        <div
+                            class="validation-error-text <%= Errors.find(e=>e.param=='ProfessionID') ? 'display-block' : 'hidden'%>">
+                            <%= Errors.find(e=>e.param=='ProfessionID') ? Errors.find(e=>e.param=='ProfessionID').msg :
+                                '' %>
+                        </div>
                     </div>
                     <div class="register-form-input-container">
-                        <select class="register-form-input select-option" name="ClubID"
-                            onchange="ClubValueChange(this)">
+                        <select id="club-DD"
+                            class="register-form-input select-option <%= Errors.find(e=>e.param=='ClubID') ? 'validation-error' : ''%>"
+                            name="ClubID" onchange="ClubValueChange(this)" value="<%= OldInputs.ClubID %>">
                             <option value=0>Select Club</option>
                             <% Clubs.forEach(club=>{ %>
-                                <option value=<%=club.ClubID %>> <%=club.Club %>
+                                <option value=<%=club.ClubID %>
+                                    <%= club.ClubID==OldInputs.ClubID ? "selected" : "" %>> <%=club.Club %>
                                 </option>
                                 <% }) %>
                         </select>
+                        <div
+                            class="validation-error-text <%= Errors.find(e=>e.param=='ClubID') ? 'display-block' : 'hidden'%>">
+                            <%= Errors.find(e=>e.param=='ClubID') ? Errors.find(e=>e.param=='ClubID').msg : '' %>
+                        </div>
                     </div>
                 </div>
                 <div class="register-inputs-row flex-row">
                     <div class="register-form-input-container hidden other-profession">
-                        <input type="text" class="register-form-input" placeholder="Other Profession" name="ProfessionOther">
+                        <input type="text" class="register-form-input" placeholder="Other Profession"
+                            name="ProfessionOther" value="<%= OldInputs.ProfessionOther %>">
                     </div>
 
                     <div class="register-form-input-container hidden other-club">
-                        <input type="text" class="register-form-input" placeholder="Other Club" name="ClubOther">
+                        <input type="text" class="register-form-input" placeholder="Other Club" name="ClubOther"
+                            value="<%= OldInputs.ClubOther %>">
                     </div>
                 </div>
-                <div class="register-form-remember-me normal-text flex-row">
-                    <input type="checkbox" name="cb-policeAndTerms">
-                    <label for="cb-policeAndTerms">i have read and agree to the <a href="" class="inline-anchor">
-                            Terms of Use</a> and <a href="" class="inline-anchor">Privacy Policy</a></label>
+                <div class="register-form-terms-container flex-column">
+                    <div class="register-form-terms-policy normal-text flex-row">
+                        <input type="checkbox" name="PoliceAndTerms" <%= OldInputs.PoliceAndTerms == "on" ? "checked" : ""  %> class="<%= Errors.find(e=>e.param=='PoliceAndTerms') ? 'validation-error-checkbox' : ''%>">
+                        <label for="PoliceAndTerms">i have read and agree to the <a href="" class="inline-anchor">
+                                Terms of Use</a> and <a href="" class="inline-anchor">Privacy Policy</a></label>
+                    </div>
+                    <div>
+                        <div class="validation-error-text <%= Errors.find(e=>e.param=='PoliceAndTerms') ? 'display-block' : 'hidden'%>"> 
+                            <%= Errors.find(e=>e.param=='PoliceAndTerms') ?Errors.find(e=>e.param=='PoliceAndTerms').msg : '' %>
+                        </div>
+                    </div>
                 </div>
                 <div class="register-form-login-btn">
                     <input type="submit" class="register-btn" name="policy" value="Register" />

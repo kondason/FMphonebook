@@ -31,6 +31,7 @@ const CreateUser = async (userObject) =>
     try
     {
         const response = await axios.post(process.env.BASE_REST_API_PATH + "Users/CreateUser", { "UserDetails": userObject });
+
         return response.data.Data;
     } catch (error)
     {
@@ -105,8 +106,43 @@ const UpdateUserURLImage = async (imageURL, userID) =>
         const response = await axios.post(process.env.BASE_REST_API_PATH + "Users/UpdateUserURLImage", { "UserID": userID, "ImageURL": imageURL });
         return response.data.Data;
     } catch (error)
+    {        
+        throw error
+    }
+};
+
+const UpdateLoginTypeObjectID = async (loginTypeID, loginTypeObjectID, userID) =>
+{
+    try 
     {
-        console.log("error",error.message);
+        const response = await axios.post(process.env.BASE_REST_API_PATH + "Users/UpdateLoginTypeObjectID", { "LoginTypeID": loginTypeID, "LoginTypeObjectID": loginTypeObjectID, "UserID": userID });
+        return response.data.Data;
+    } catch (error)
+    {
+        throw error
+    }
+};
+
+const GetUserIDByEmail = async (email) =>
+{
+    try 
+    {
+        const response = await axios.post(process.env.BASE_REST_API_PATH + "Users/GetUserIDByEmail", { "Email": email });
+        return response.data.Data;
+    } catch (error)
+    {
+        throw error
+    }
+}
+
+const GetUserIDAndPassByEmail = async (email) =>
+{
+    try 
+    {
+        const response = await axios.post(process.env.BASE_REST_API_PATH + "Users/GetUserIDAndPassByEmail", { "Email": email });
+        return response.data.Data;
+    } catch (error)
+    {
         throw error
     }
 };
@@ -121,5 +157,8 @@ module.exports =
     CreateProfession,
     GetUserByID,
     GetUserByLoginTypeObjectID,
-    UpdateUserURLImage
+    UpdateUserURLImage,
+    UpdateLoginTypeObjectID,
+    GetUserIDByEmail,
+    GetUserIDAndPassByEmail
 }

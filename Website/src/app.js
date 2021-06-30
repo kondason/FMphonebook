@@ -5,12 +5,15 @@ const https = require('https');
 const app = express();
 const path = require('path'); 
 const fs = require('fs');
+const flash = require('connect-flash');
 
 const mainRouter = require('./routes/mainRoutes');
 const loginRouter = require('./routes/loginRoutes');
 const registerRouter = require('./routes/registerRoutes');
 const authRouter = require('./routes/authRoutes');
 const passport = require('passport');
+const mysqlSessionStore = require('./Config/mysqlSessionStore').sessionStore;
+
 
 const privateKey = fs.readFileSync('keys/server.key');
 const certificate = fs.readFileSync('keys/server.cert');
@@ -25,8 +28,10 @@ app.use(express.json()) // To parse the incoming requests with JSON payloads
 app.use(session({
     secret: process.env.SESSION_SECRET_KEY,
     resave: false,
-    saveUninitialized:false
+    saveUninitialized:false,
+    store: mysqlSessionStore
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 

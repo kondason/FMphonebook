@@ -76,6 +76,13 @@ body {
 
 .register-form-terms-policy {
     width: 100%;
+    
+    align-content: center;
+}
+
+.register-form-terms-container
+{
+    width: 100%;
 }
 
 .register-form-login-btn {
@@ -177,4 +184,21 @@ body {
 .display-block
 {
     display: block;
+}
+.validation-error
+{
+    border-color: red;
+}
+
+.validation-error-checkbox
+{
+    outline: red   
+}
+
+.validation-error-text
+{
+    padding-top: 5px;
+    text-align: center;
+    font-size: 12px;
+    color: red;
 }

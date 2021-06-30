@@ -1,5 +1,9 @@
+ProfessionValueChange(document.getElementById('profession-DD'));
+ClubValueChange(document.getElementById('club-DD'));
+
 function ProfessionValueChange(selectObject)
 {
+
     const profession = document.querySelector('.other-profession').classList;
     const club = document.querySelector('.other-club').classList;
 
@@ -31,6 +35,7 @@ function ProfessionValueChange(selectObject)
 
 function ClubValueChange(selectObject)
 {
+    
     const club = document.querySelector('.other-club').classList;
     const profession = document.querySelector('.other-profession').classList;
 

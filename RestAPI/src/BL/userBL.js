@@ -62,8 +62,7 @@ const CreateUser = async (userDetails) =>
 {
     try
     {
-
-        const result = await mysqlDAL.CreateUser(userDetails);
+        const result = await mysqlDAL.CreateUser(userDetails);   
 
         const response =
         {
@@ -180,6 +179,83 @@ const UpdateUserURLImage = async (userID, imageURL) =>
     }
 };
 
+const UpdateLoginTypeObjectID = async (loginTypeID, loginTypeObjectID,userID) =>
+{
+    try
+    {
+        const response =
+        {
+            "Status": 500,
+            "Msg": "You are not allowed to perform this action.",
+            "Data": ""
+        };
+
+        const result = await mysqlDAL.UpdateLoginTypeObjectID(loginTypeID, loginTypeObjectID,userID);
+
+        response.Status = 200;
+        response.Data = result;
+        response.Msg = "Updated.";
+
+        return response;
+
+    } catch (error)
+    {
+        throw error;
+    }
+};
+
+const GetUserIDByEmail = async (email)=>
+{
+    try
+    {
+        const response =
+        {
+            "Status": 200,
+            "Msg": "",
+            "Data": ""
+        };
+
+        const result = await mysqlDAL.GetUserIDByEmail(email);
+
+        response.Status = 200;
+        response.Data = result;
+        response.Msg = "";
+
+        return response;
+
+    } catch (error)
+    {
+        throw error;
+    }
+}
+
+const GetUserIDAndPassByEmail = async (email)=>
+{
+    try
+    {
+        const response =
+        {
+            "Status": 200,
+            "Msg": "",
+            "Data": ""
+        };
+
+        const result = await mysqlDAL.GetUserIDAndPassByEmail(email);
+
+        response.Status = 200;
+        response.Data = result;
+        response.Msg = "";
+
+        return response;
+
+    } catch (error)
+    {
+        throw error;
+    }
+}
+
+
+
 module.exports =
 {
     CreateUser,
@@ -189,5 +265,8 @@ module.exports =
     DeleteUser,
     UpdateUser,
     IsEmailExists,
-    UpdateUserURLImage
+    UpdateUserURLImage,
+    UpdateLoginTypeObjectID,
+    GetUserIDByEmail,
+    GetUserIDAndPassByEmail
 };

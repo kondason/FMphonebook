@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/login.css">
     <title>FMphonebook | Login</title>
 </head>
 
@@ -14,48 +14,62 @@
     <div class="main-container flex-row">
         <div class="login-container flex-column">
             <div class="login-form-logo">
-                <img src="images/logo2.png" />
+                <img src="/images/logo2.png" />
             </div>
             <div class="login-form-header">
                 <h3>Login</h3>
             </div>
-            <div class="login-inputs-container flex-column">
-                <div class="login-form-email">
-                    <input type="email" class="login-form-input" placeholder="E-mail">
-                </div>
-                <div class="login-form-password">
-                    <input type="password" class="login-form-input" placeholder="Password">
-                </div>
-                <div class="login-form-remember-me normal-text flex-row">
-                    <input type="checkbox" name="rememberMe">
-                    <label for="rememberMe">Remember Me</label>
-                </div>
-                <div class="login-form-login-btn">
-                    <input type="submit" class="login-btn" name="policy" value="Login" />
-                </div>
-                <div class="login-form-divider flex-row">
-                    <div class="divider">
-                        <hr>
+            <form action="/login/" method="post" class="login-inputs-container flex-column" novalidate>
+                <div class="login-inputs-container flex-column">
+
+                    <div class="validation-error-text-container flex-column <%= Errors ? 'display-block' : 'hidden' %>">
+                        <% Errors.forEach(e=> { %>
+                            <div class="error-message"><%= e.msg %></div>
+                        <% }) %>
+
                     </div>
-                    <div class="divider-text">
-                        Or Sign In With
+                    <div class="login-form-email">
+                        <input type="email"
+                            class="login-form-input <%= Errors.find(e=>e.param=='Email') ? 'validation-error' : ''%>"
+                            placeholder="E-mail" name="Email" value="<%= OldInputs.Email %>">
                     </div>
-                    <div class="divider">
-                        <hr>
+
+                    <div class="login-form-password">
+                        <input type="password"
+                            class="login-form-input <%= Errors.find(e=>e.param=='Password') ? 'validation-error' : ''%>" placeholder="Password" name="Password" value="<%= OldInputs.Password %>">
+                    </div>
+
+                    <div class="login-form-remember-me normal-text flex-row">
+                        <input type="checkbox" name="rememberMe">
+                        <label for="rememberMe">Remember Me</label>
+                    </div>
+                    <div class="login-form-login-btn">
+                        <input type="submit" class="login-btn" name="policy" value="Login" />
+                    </div>
+                    <div class="login-form-divider flex-row">
+                        <div class="divider">
+                            <hr>
+                        </div>
+                        <div class="divider-text">
+                            Or Sign In With
+                        </div>
+                        <div class="divider">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="login-frm-socials flex-row">
+                        <div class="login-social-btn-container">
+                            <a href="/auth/facebook" class="login-social facebook">Log in with Facebook</a>
+                        </div>
+                        <div class="login-social-btn-container">
+                            <a href="/auth/google" class="login-social google">Log in with Google+</a>
+                        </div>
+                    </div>
+                    <div class="normal-text">
+                        Don't have an account yet? <a href="/register" class="inline-anchor">Sign up</a>
                     </div>
                 </div>
-                <div class="login-frm-socials flex-row">
-                    <div class="login-social-btn-container">
-                       <a href="/auth/facebook" class="login-social facebook">Log in with Facebook</a>
-                    </div>
-                    <div class="login-social-btn-container">
-                        <a href="/auth/google" class="login-social google">Log in with Google+</a>
-                    </div>
-                </div>
-                <div class="normal-text">
-                    Don't have an account yet? <a href="/register" class="inline-anchor">Sign up</a>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </body>

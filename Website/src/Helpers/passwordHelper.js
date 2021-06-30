@@ -13,11 +13,11 @@ const EncryptPassword = async (passwordToEncrypt) =>
     }
 }
 
-const ComparePassword = async (Password1, Password2) =>
+const ComparePassword = async (password1, hashPassword) =>
 {
     try
     {
-        const result = await bcrypt.compare(Password1, Password2)
+        const result = await bcrypt.compare(password1, hashPassword)
         return result;
     } catch (error)
     {

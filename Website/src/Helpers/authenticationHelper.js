@@ -4,10 +4,41 @@ const date = require('date-and-time');
 const registerBL = require('../BL/registerBL');
 const usersBL = require('../BL/usersBL');
 const imageHelper = require('../Helpers/imageHelper');
+const passwordHelper = require('../Helpers/passwordHelper');
 
 const passport = require('passport');
+
+//Social Strategy
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+//Local Strategy
+const LocalStrategy = require('passport-local').Strategy;
+
+passport.use(new LocalStrategy({
+    usernameField: 'Email',
+    passwordField: 'Password'
+},
+    async function (email, password, done)
+    {
+        try
+        {
+            const result = await usersBL.GetUserIDAndPassByEmail(email);
+
+            if (!result)
+                return done(null, false, { message: "email or password is incorrect" });
+
+            if (await passwordHelper.ComparePassword(password, result.Password)) //check if passwords match
+                return done(null, result); //Successfully logged in
+            else
+                return done(null, false, { message: 'email or password is incorrect' }); //Email exists but password not matched
+
+        } catch (error)
+        {
+            done(error);
+        }
+    }
+));
 
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
@@ -19,6 +50,7 @@ passport.use(new FacebookStrategy({
     {
         try
         {
+            //check if user was create by this login type
             let responseData = await usersBL.GetUserByLoginTypeObjectID(profile.id);
             let userObject = responseData[0][0];
 
@@ -30,14 +62,26 @@ passport.use(new FacebookStrategy({
             let userBirthday = date.parse(profile._json.birthday, 'DD/MM/YYYY');
             userBirthday = date.format(userBirthday, 'YYYY-MM-DD');
 
-            const userID = await registerBL.CreateUser(2, profile.id, profile._json.email, null, profile._json.first_name, profile._json.last_name, userBirthday, null, null, null, null);
+            //check if user was create by this login type
+            const response = await registerBL.CreateUser(2, profile.id, profile._json.email, null, profile._json.first_name, profile._json.last_name, userBirthday, null, null, null, null);
 
-            const imageStream = await imageHelper.GetImageFromURL(profile.photos[0].value);
-            const userImageURL = await imageHelper.SaveUserImageFromStreamReturnURL(imageStream, userID.Data);
+            if (response.Status == 500)
+            {
+                const userID = await usersBL.GetUserIDByEmail(profile._json.email);
+                await usersBL.UpdateLoginTypeObjectID(3, profile.id, userID);
 
-            await usersBL.UpdateUserURLImage(userImageURL, userID.Data);
+                response.Data = userID;
+            }
+            //user were not exists, update his photo with the login type
+            else
+            {
+                const imageStream = await imageHelper.GetImageFromURL(profile.photos[0].value);
+                const userImageURL = await imageHelper.SaveUserImageFromStreamReturnURL(imageStream, response.Data);
 
-            userObject = { "UserID": userID.Data };
+                await usersBL.UpdateUserURLImage(userImageURL, userID.Data);
+            }
+
+            userObject = { "UserID": response.Data };
 
             return done(null, userObject);
         } catch (error)
@@ -56,8 +100,7 @@ passport.use(new GoogleStrategy({
     {
         try
         {
-            console.log(profile);
-
+            //check if user was create by this login type
             let responseData = await usersBL.GetUserByLoginTypeObjectID(profile.id);
             let userObject = responseData[0][0];
 
@@ -66,14 +109,27 @@ passport.use(new GoogleStrategy({
                 return done(null, userObject);
             }
 
-            const userID = await registerBL.CreateUser(3, profile.id, profile._json.email, null, profile._json.given_name, profile._json.family_name, null, null, null, null, null);
+            //if user not exists with that login type, try to create it
+            const response = await registerBL.CreateUser(3, profile.id, profile._json.email, null, profile._json.given_name, profile._json.family_name, null, null, null, null, null);
 
-            const imageStream = await imageHelper.GetImageFromURL(profile._json.picture);
-            const userImageURL = await imageHelper.SaveUserImageFromStreamReturnURL(imageStream, userID.Data);
+            //user exists with different login type
+            if (response.Status == 500)
+            {
+                const userID = await usersBL.GetUserIDByEmail(profile._json.email);
+                await usersBL.UpdateLoginTypeObjectID(3, profile.id, userID);
 
-            await usersBL.UpdateUserURLImage(userImageURL, userID.Data);
+                response.Data = userID;
+            }
+            //user were not exists, update his photo with the login type
+            else
+            {
+                const imageStream = await imageHelper.GetImageFromURL(profile._json.picture);
+                const userImageURL = await imageHelper.SaveUserImageFromStreamReturnURL(imageStream, response.Data);
 
-            userObject = { "UserID": userID.Data };
+                await usersBL.UpdateUserURLImage(userImageURL, response.Data);
+            }
+
+            userObject = { "UserID": response.Data };
 
             return done(null, userObject);
         } catch (error)
@@ -82,6 +138,8 @@ passport.use(new GoogleStrategy({
         }
     }
 ));
+
+
 
 passport.serializeUser(function (user, done)
 {

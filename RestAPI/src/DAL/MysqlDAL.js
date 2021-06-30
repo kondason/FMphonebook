@@ -53,15 +53,15 @@ const CreateUser = async (userDetails) =>
     {
         const [rows, fields] = await mysql.execute('insert into Users (LoginTypeID,LoginTypeObjectID,Email,Password,FirstName,LastName,Birthday,ClubID,ProfessionID) values(?,?,?,?,?,?,?,?,?);',
             [
-                userDetails.LoginTypeID,
+                userDetails.LoginTypeID === undefined ? 1 : userDetails.LoginTypeID,
                 userDetails.LoginTypeObjectID === undefined ? null : userDetails.LoginTypeObjectID,
                 userDetails.Email,
                 userDetails.Password === undefined ? null : userDetails.Password,
                 userDetails.FirstName,
                 userDetails.LastName,
-                userDetails.Birthday,
-                userDetails.ProfessionID === undefined ? null : userDetails.ProfessionID,
-                userDetails.ClubID === undefined ? null : userDetails.ClubID
+                userDetails.Birthday === undefined ? null : userDetails.Birthday,
+                userDetails.ClubID === undefined ? null : userDetails.ClubID,
+                userDetails.ProfessionID === undefined ? null : userDetails.ProfessionID
             ]);
 
         return rows.insertId;
@@ -140,19 +140,55 @@ const IsEmailExists = async (email) =>
 }
 
 
-const UpdateUserURLImage = async(userID, imageURL)=>
+const UpdateUserURLImage = async (userID, imageURL) =>
 {
     try
     {
-        const [rows, fields] = await mysql.execute('update Users set ProfileImageURL = ? where UserID = ?', [imageURL,userID]);
-        console.log(rows);
+        const [rows, fields] = await mysql.execute('update Users set ProfileImageURL = ? where UserID = ?', [imageURL, userID]);
         return rows;
     } catch (error)
     {
-        console.log(error);
         throw error.sqlMessage;
     }
 };
+
+const UpdateLoginTypeObjectID = async (loginTypeID, loginTypeObjectID, userID) =>
+{
+    try
+    {
+        const [rows, fields] = await mysql.execute('update Users set LoginTypeID = ? , LoginTypeObjectID = ? where UserID = ?', [loginTypeID, loginTypeObjectID, userID]);
+        return rows;
+    } catch (error)
+    {
+        throw error.sqlMessage;
+    }
+};
+
+const GetUserIDByEmail = async(email)=>
+{
+    try
+    {
+        const [rows, fields] = await mysql.execute('select UserID from Users where Email = ?', [email]);
+        return rows[0].UserID;
+    } catch (error)
+    {
+        throw error.sqlMessage;
+    }
+}
+
+const GetUserIDAndPassByEmail = async(email)=>
+{
+    try
+    {
+        const [rows, fields] = await mysql.execute('select UserID,Password from Users where Email = ?', [email]);
+        return rows[0];
+    } catch (error)
+    {
+        throw error.sqlMessage;
+    }
+}
+
+
 
 /* Posts */
 const GetPosts = async () =>
@@ -233,7 +269,10 @@ module.exports =
     UpdateUser,
     IsEmailExists,
     UpdateUserURLImage,
-    
+    UpdateLoginTypeObjectID,
+    GetUserIDByEmail,
+    GetUserIDAndPassByEmail,
+
     /* Posts */
     GetPosts,
 

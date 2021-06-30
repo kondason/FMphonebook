@@ -100,5 +100,40 @@ router.post('/UpdateUserURLImage', (async (req, res) =>
     }
 }));
 
+router.post('/UpdateLoginTypeObjectID', (async (req, res) =>
+{
+    try
+    {
+        const result = await userBL.UpdateLoginTypeObjectID(req.body.LoginTypeID,req.body.LoginTypeObjectID,req.body.UserID);
+        return res.status(result.Status).json(result);
+    } catch (error)
+    {
+        res.status(500).json({ "err": error });
+    }
+}));
+
+router.post('/GetUserIDByEmail', (async (req, res) =>
+{
+    try
+    {
+        const result = await userBL.GetUserIDByEmail(req.body.Email);
+        return res.status(result.Status).json(result);
+    } catch (error)
+    {
+        res.status(500).json({ "err": error });
+    }
+}));
+
+router.post('/GetUserIDAndPassByEmail', (async (req, res) =>
+{
+    try
+    {
+        const result = await userBL.GetUserIDAndPassByEmail(req.body.Email);
+        return res.status(result.Status).json(result);
+    } catch (error)
+    {
+        res.status(500).json({ "err": error });
+    }
+}));
 
 module.exports = router;
