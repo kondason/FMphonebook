@@ -1,5 +1,5 @@
 const express = require('express');
-const registerBL = require('../BL/registerBL.js');
+const registerBL = require('../BL/registerBL');
 
 const router = express.Router();
 

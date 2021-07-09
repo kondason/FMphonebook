@@ -1,5 +1,5 @@
 const express = require('express');
-const professionsBL = require('../BL/professionsBL.js');
+const professionsBL = require('../BL/professionsBL');
 
 const router = express.Router();
 

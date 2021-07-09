@@ -1,29 +1,6 @@
 const restApiDAL = require('../DAL/restAPIDal');
 const passwordHelper = require('../Helpers/passwordHelper');
 
-const GetProfessions = async () =>
-{
-    try
-    {
-        const response = await restApiDAL.GetProfessions();
-        return response;
-    } catch (error)
-    {
-        throw error;
-    }
-};
-
-const GetClubs = async () =>
-{
-    try
-    {
-        const response = await restApiDAL.GetClubs();
-        return response;
-    } catch (error)
-    {
-        throw error;
-    }
-};
 
 const CreateUser = async (loginTypeID,/* only for 3rd party users - Facebook or Gmail */loginTypeObjectID, email, password, firstName, lastName, birthday, professionID, professionOther, clubID, clubOther) =>
 {
@@ -82,12 +59,7 @@ const CreateUser = async (loginTypeID,/* only for 3rd party users - Facebook or 
 };
 
 
-
-
-
 module.exports =
 {
-    GetProfessions,
-    GetClubs,
     CreateUser
 }

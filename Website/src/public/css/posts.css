@@ -1,0 +1,83 @@
+.posts-sidebar-container {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    background-color: white;
+}
+
+.posts-header-container {
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+}
+
+.posts-header {
+    width: 90%;
+}
+
+.posts-create-post-btn {
+    background-color: #37AE62;
+    border-radius: 10px;
+    width: 208px;
+    height: 42px;
+    border: none;
+    color: white;
+}
+
+.posts-container {
+    width: 90%;
+    align-items: center;
+}
+
+.post-container {
+    background-color: #F4F8FC;
+    border-radius: 10px;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.post-content {
+    max-height: 170px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    text-align: justify;
+    text-justify: inter-word;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 8px;
+}
+
+.post-author-details {
+    padding-top: 10px;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 5px;
+}
+
+.author-details-left {
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+
+.author-details-author-img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.author-details-author-name {
+    margin-left: 10px;
+}
+
+.author-details-post-date {
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}

@@ -1,15 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="text/javascript" src="/scripts/addPost.js" defer></script>
+    <script type="text/javascript" src="/scripts/searchUserFrom.js" defer></script>
+    <script type="text/javascript" src="scripts/trix.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/trix.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/searchForm.css">
+    <link rel="stylesheet" href="/css/posts.css">
+    <link rel="stylesheet" href="/css/searchResults.css">
+    <link rel="stylesheet" href="/css/addPost.css">
     <title>Document</title>
 </head>
+
 <body>
-    <%- include('partials/navigation.ejs') %>
-    <%= token %>
+    <div class="main-container">
+        <div class="grid-container">
+            <div class="navigation-grid-item">
+                <%- include('partials/navigation.ejs') %>
+            </div>
+            <div class="posts-grid-item">
+                <%- include('partials/posts.ejs') %>
+            </div>
+            <div class="search-form-grid-item">
+                <%- include('partials/searchForm.ejs') %>
+            </div>
+            <div class="search-results-grid-item">
+                <%- include('partials/searchResults.ejs') %>
+            </div>
+            <div class="footer-grid-item">
+                footer
+            </div>
+
+            <div class="add-post-modal">
+                <%- include('partials/addPost.ejs') %>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

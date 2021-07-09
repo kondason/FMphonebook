@@ -1,16 +1,35 @@
 const express = require('express');
-const jwtHelper = require('../Helpers/jwtHelper');
+const postsBL = require('../BL/postsBL.js');
+const professionsBL = require('../BL/professionsBL');
+const clubsBL = require('../BL/clubsBL');
+const teamAgesBL = require('../BL/teamAgesBL');
+const employmentStatusesBL = require('../BL/employmentStatusesBL');
+
 
 const router = express.Router();
 
-router.get('/', (req, res) =>
+router.get('/', async (req, res) =>
 {
     try
     {
         if (req.isAuthenticated())
         {
-            const token = jwtHelper.CreateJTWToken(req.user.UserID)
-            res.status(200).render('index', { "token": token });
+            const posts = await postsBL.GetPosts(10);
+            const postTypes = await postsBL.GetPostTypes();
+            const professions = await professionsBL.GetProfessions();
+            const clubs = await clubsBL.GetClubs();
+            const employmentStatuses = await employmentStatusesBL.GetEmploymentStatuses();
+            const teamAges = await teamAgesBL.GetTeamAges();
+
+            res.status(200).render('index', { "user": req.user, Data: { 
+                                                                        posts: posts.Data,
+                                                                        postTypes: postTypes,
+                                                                        professions: professions.Data,
+                                                                        clubs: clubs.Data,
+                                                                        employmentStatuses: employmentStatuses.Data,
+                                                                        teamAges: teamAges.Data,
+                                                                       }
+                                            });
         }
         else
             res.render("login", { "Errors": [], "OldInputs": "" });

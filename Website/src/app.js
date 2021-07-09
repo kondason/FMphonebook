@@ -5,12 +5,14 @@ const https = require('https');
 const app = express();
 const path = require('path'); 
 const fs = require('fs');
-const flash = require('connect-flash');
 
 const mainRouter = require('./routes/mainRoutes');
 const loginRouter = require('./routes/loginRoutes');
 const registerRouter = require('./routes/registerRoutes');
 const authRouter = require('./routes/authRoutes');
+const postsRouter = require('./routes/postsRoutes');
+const usersRouter = require('./routes/usersRoutes');
+
 const passport = require('passport');
 const mysqlSessionStore = require('./Config/mysqlSessionStore').sessionStore;
 
@@ -43,5 +45,8 @@ app.use('/', mainRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/auth', authRouter);
+app.use('/posts', postsRouter);
+app.use('/users', usersRouter);
+
 
 https.createServer({key:privateKey,cert:certificate},app).listen(4000);

@@ -37,16 +37,4 @@ Auth in JWT + social logins
 
 Will save the email on json file..
 
-
-/*
-Todo RestAPI:
-
-1. JWT client server middlewhere
-
-*/
-
-404323068
-leledix614@paseacuba.com
-ib 69
-
-https://www.npmjs.com/package/i18n
+    

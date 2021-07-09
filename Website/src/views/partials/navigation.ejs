@@ -1,3 +1,23 @@
-<div class="navigation-container">
-    sfaf
+<div class="nav-container flex-row">
+    <div class="nav-left flex-row">
+        <a class="nav-left-img-container" href="/"> 
+            <img src="/images/logo2.png">
+        </a>
+        <div class="nav-left-background"></div>
+    </div>
+    <div class="nav-center flex-row">
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="/">Browse</a></li>
+        <li><a href="/posts">Posts</a></li>
+        <li><a href="/">Admin</a></li>
+    </div>
+
+    <div class="nav-right flex-row">
+        <img class="nav-right-profile-img" src="/images/Users/<%=user.UserID %>.jpg">
+        <li class="small-text"><a href="/Users/<%=user.UserID %>">
+                <%=user.FirstName %>
+                    <%=user.LastName %>
+            </a></li>
+        <li class="small-text">[<a href="/logout">Log Out</a>]</li>
+    </div>
 </div>

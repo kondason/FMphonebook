@@ -1,5 +1,5 @@
 require('dotenv').config();
-const date = require('date-and-time');
+var _ = require('lodash');
 
 const registerBL = require('../BL/registerBL');
 const usersBL = require('../BL/usersBL');
@@ -59,8 +59,8 @@ passport.use(new FacebookStrategy({
                 return done(null, userObject);
             }
 
-            let userBirthday = date.parse(profile._json.birthday, 'DD/MM/YYYY');
-            userBirthday = date.format(userBirthday, 'YYYY-MM-DD');
+            let userBirthday = new Date(profile._json.birthday).toLocaleDateString("af-ZA");
+            console.log(userBirthday);
 
             //check if user was create by this login type
             const response = await registerBL.CreateUser(2, profile.id, profile._json.email, null, profile._json.first_name, profile._json.last_name, userBirthday, null, null, null, null);
@@ -78,7 +78,7 @@ passport.use(new FacebookStrategy({
                 const imageStream = await imageHelper.GetImageFromURL(profile.photos[0].value);
                 const userImageURL = await imageHelper.SaveUserImageFromStreamReturnURL(imageStream, response.Data);
 
-                await usersBL.UpdateUserURLImage(userImageURL, userID.Data);
+                await usersBL.UpdateUserURLImage(userImageURL, response.Data);
             }
 
             userObject = { "UserID": response.Data };
@@ -157,6 +157,9 @@ passport.deserializeUser(async function (id, done)
     try
     {
         const userObject = await usersBL.GetUserByID(id);
+        userObject.FirstName = _.capitalize(userObject.FirstName);
+        userObject.LastName = _.capitalize(userObject.LastName);
+
         return done(null, userObject)
     } catch (error)
     {

@@ -1,5 +1,5 @@
 const express = require('express');
-const clubsBL = require('../BL/clubsBL.js');
+const clubsBL = require('../BL/clubsBL');
 
 const router = express.Router();
 

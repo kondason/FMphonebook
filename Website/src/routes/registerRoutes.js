@@ -1,5 +1,7 @@
 const express = require('express');
 const registerBL = require('../BL/registerBL');
+const clubsBL = require('../BL/clubsBL');
+const professionsBL = require('../BL/professionsBL');
 const { UserPasswordRegValidatorMiddleware, RegisterValidatorResult } = require('../middleware/validators/registerValidator');
 
 const router = express.Router();
@@ -13,8 +15,8 @@ router.get('/', (async (req, res) =>
             res.redirect('index');
         else
         {
-            const professions = await registerBL.GetProfessions();
-            const clubs = await registerBL.GetClubs();
+            const professions = await professionsBL.GetProfessions();
+            const clubs = await clubsBL.GetClubs();
 
             res.render("register", { "Professions": professions.Data, "Clubs": clubs.Data, "Errors": [], "OldInputs": "" });
         }

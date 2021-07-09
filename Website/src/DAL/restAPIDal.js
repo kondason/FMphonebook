@@ -106,7 +106,7 @@ const UpdateUserURLImage = async (imageURL, userID) =>
         const response = await axios.post(process.env.BASE_REST_API_PATH + "Users/UpdateUserURLImage", { "UserID": userID, "ImageURL": imageURL });
         return response.data.Data;
     } catch (error)
-    {        
+    {
         throw error
     }
 };
@@ -147,6 +147,68 @@ const GetUserIDAndPassByEmail = async (email) =>
     }
 };
 
+const GetPosts = async () =>
+{
+    try
+    {
+        const response = await axios.get(process.env.BASE_REST_API_PATH + "Posts/GetPosts");
+        return response.data;
+    } catch (error)
+    {
+        throw error
+    }
+};
+
+const GetPostTypes = async () =>
+{
+    try
+    {
+        const response = await axios.get(process.env.BASE_REST_API_PATH + "Posts/GetPostTypes");
+        return response.data;
+    } catch (error)
+    {
+        throw error
+    }
+};
+
+const AddPost = async (userID, postTypeID, postBody) =>
+{
+    try 
+    {
+        const response = await axios.post(process.env.BASE_REST_API_PATH + "Posts/AddPost", { UserID: userID, PostTypeID: postTypeID, Body: postBody });
+        return response.data.Data;
+    } catch (error)
+    {
+        throw error
+    }
+
+};
+
+
+const GetEmploymentStatuses = async () =>
+{
+    try
+    {
+        const response = await axios.get(process.env.BASE_REST_API_PATH + "EmploymentStatuses/GetEmploymentStatuses");
+        return response.data;
+    } catch (error)
+    {
+        throw error
+    }
+};
+
+const GetTeamAges = async () =>
+{
+    try
+    {
+        const response = await axios.get(process.env.BASE_REST_API_PATH + "TeamAges/GetTeamAges");
+        return response.data;
+    } catch (error)
+    {
+        throw error
+    }
+};
+
 module.exports =
 {
     GetProfessions,
@@ -160,5 +222,10 @@ module.exports =
     UpdateUserURLImage,
     UpdateLoginTypeObjectID,
     GetUserIDByEmail,
-    GetUserIDAndPassByEmail
+    GetUserIDAndPassByEmail,
+    GetPosts,
+    GetPostTypes,
+    AddPost,
+    GetTeamAges,
+    GetEmploymentStatuses
 }

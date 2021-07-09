@@ -4,6 +4,8 @@ const postsRouter = require ('./routes/postsRoutes');
 const registerRouter = require ('./routes/registerRoutes');
 const clubsRouter = require ('./routes/clubsRoutes');
 const professionsRouter = require ('./routes/professionsRoutes');
+const employmentStatusesRouter = require ('./routes/employmentStatusesRoutes');
+const teamAgesRouter = require ('./routes/teamAgesRoutes');
 
 const cors = require('cors')
 
@@ -18,5 +20,8 @@ app.use('/posts/', postsRouter);
 app.use('/register/', registerRouter);
 app.use('/clubs/', clubsRouter);
 app.use('/professions/', professionsRouter);
+app.use('/employmentStatuses/', employmentStatusesRouter);
+app.use('/teamAges/', teamAgesRouter);
+
 
 app.listen(3000);

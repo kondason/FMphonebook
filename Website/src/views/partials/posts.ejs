@@ -1,0 +1,33 @@
+<div class="posts-sidebar-container flex-column">
+    <div class="posts-header-container flex-row">
+        <div class="posts-header">
+            <h3>Last <%=Data.posts.length %> posts</h3>
+        </div>
+        <button class="posts-create-post-btn" data-modal-target="#modal"> Add post</button>
+    </div>
+    <% Data.posts.forEach(post=>{ %>
+        <div class="posts-container flex-column">
+            <div class="post-container flex-column">
+                <div class="post-content">
+                    <%-post.body %>
+                </div>
+                <div class="post-author-details flex-row">
+                    <div class="author-details-left flex-row">
+                        <div class="author-details-author-img-container">
+                            <img class="author-details-author-img" src="/images/Users/<%=user.UserID %>.jpg">
+                        </div>
+                        <div class="author-details-author-name">
+                            <%=post.FirstName %>
+                                <%=post.LastName %>
+                        </div>
+                    </div>
+                    <div class="author-details-post-date">
+                        <%=post.CreationDate %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%})%>
+
+</div>

@@ -122,7 +122,6 @@ const UpdateUser = async (userDetails) =>
         return rows;
     } catch (error)
     {
-        console.log(console.error);
         throw error.sqlMessage;
     }
 };
@@ -164,7 +163,7 @@ const UpdateLoginTypeObjectID = async (loginTypeID, loginTypeObjectID, userID) =
     }
 };
 
-const GetUserIDByEmail = async(email)=>
+const GetUserIDByEmail = async (email) =>
 {
     try
     {
@@ -176,7 +175,7 @@ const GetUserIDByEmail = async(email)=>
     }
 }
 
-const GetUserIDAndPassByEmail = async(email)=>
+const GetUserIDAndPassByEmail = async (email) =>
 {
     try
     {
@@ -195,7 +194,7 @@ const GetPosts = async () =>
 {
     try
     {
-        const [rows, fields] = await mysql.execute("Posts_ActivePosts")
+        const [rows, fields] = await mysql.execute("select * from Posts_ActivePosts");
         return rows;
     } catch (error)
     {
@@ -203,6 +202,17 @@ const GetPosts = async () =>
     }
 };
 
+const GetPostTypes = async () =>
+{
+    try
+    {
+        const [rows, fields] = await mysql.execute("select * from PostTypes");
+        return rows;
+    } catch (error)
+    {
+        throw error.sqlMessage;
+    }
+};
 
 /*Professions*/
 
@@ -256,6 +266,41 @@ const CreateClub = async (clubName) =>
     }
 };
 
+const AddPost = async (userID, postTypeID, body) =>
+{
+    try
+    {
+        const [rows, fields] = await mysql.execute("insert into Posts(PostTypeID,UserID,Body) values(?,?,?)", [postTypeID, userID, body]);
+        return rows.insertId;
+    } catch (error)
+    {
+        throw error.sqlMessage;
+    }
+};
+
+const GetEmploymentStatuses = async () =>
+{
+    try
+    {
+        const [rows, fields] = await mysql.query("select * from EmploymentStatuses");
+        return rows;
+    } catch (error)
+    {
+        throw error.sqlMessage;
+    }
+};
+
+const GetTeamAges = async () =>
+{
+    try
+    {
+        const [rows, fields] = await mysql.query("select * from TeamAges");
+        return rows;
+    } catch (error)
+    {
+        throw error.sqlMessage;
+    }
+};
 
 module.exports =
 {
@@ -275,6 +320,8 @@ module.exports =
 
     /* Posts */
     GetPosts,
+    GetPostTypes,
+    AddPost,
 
     /*Professions*/
     GetProfessions,
@@ -282,7 +329,12 @@ module.exports =
 
     /* Clubs */
     GetClubs,
-    CreateClub
+    CreateClub,
+
+    /*Team Ages*/
+    GetTeamAges,
+    /*Employment Statuses*/
+    GetEmploymentStatuses
 
 }
 

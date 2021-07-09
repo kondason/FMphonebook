@@ -1,0 +1,25 @@
+<div id="modal" class="modal flex-column">
+    <form method="POST" action="/posts/addpost" class="modal-container flex-column">
+        <div class="modal-header">
+            <h3>Add Post</h3>
+        </div>
+        <div class="modal-first-row flex-row">
+
+            <select class="form-input form-input-modal" Name="PostTypeID">
+                <% Data.postTypes.forEach(postType=>{ %>
+                    <option value="<%=postType.PostTypeID%>"><%=postType.PostType%></option>
+                <% })%>
+            </select>
+            <div class="modal-first-row-right flex-row">
+                <button type="submit" class="modal-add-post-btn form-input-modal">Add Post</button>
+                <button class="modal-clear-btn form-input-modal">Clear</button>
+            </div>
+
+        </div>
+        <input id="formData" type="hidden" name="PostBody">
+        <trix-editor placeholder="Enter post content" input="formData" class="modal-post-body"></trix-editor>
+    </form>
+
+
+</div>
+<div id="modal-overlay" class="modal-overlay"></div>
