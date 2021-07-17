@@ -1,10 +1,10 @@
 const mysqlDAL = require('../DAL/MysqlDAL');
 
-const GetUsersByParameters = async (searchParams) =>
+const GetUsersByParameters = async (name, email, professionID, clubID, teamAgeID, employmentStatusID) =>
 {
     try
     {
-        const result = await mysqlDAL.GetUsersByParameters(searchParams);
+        const result = await mysqlDAL.GetUsersByParameters(name, email, professionID, clubID, teamAgeID, employmentStatusID);
         const response =
         {
             "Status": 200,
@@ -62,7 +62,7 @@ const CreateUser = async (userDetails) =>
 {
     try
     {
-        const result = await mysqlDAL.CreateUser(userDetails);   
+        const result = await mysqlDAL.CreateUser(userDetails);
 
         const response =
         {
@@ -179,7 +179,7 @@ const UpdateUserURLImage = async (userID, imageURL) =>
     }
 };
 
-const UpdateLoginTypeObjectID = async (loginTypeID, loginTypeObjectID,userID) =>
+const UpdateLoginTypeObjectID = async (loginTypeID, loginTypeObjectID, userID) =>
 {
     try
     {
@@ -190,7 +190,7 @@ const UpdateLoginTypeObjectID = async (loginTypeID, loginTypeObjectID,userID) =>
             "Data": ""
         };
 
-        const result = await mysqlDAL.UpdateLoginTypeObjectID(loginTypeID, loginTypeObjectID,userID);
+        const result = await mysqlDAL.UpdateLoginTypeObjectID(loginTypeID, loginTypeObjectID, userID);
 
         response.Status = 200;
         response.Data = result;
@@ -204,7 +204,7 @@ const UpdateLoginTypeObjectID = async (loginTypeID, loginTypeObjectID,userID) =>
     }
 };
 
-const GetUserIDByEmail = async (email)=>
+const GetUserIDByEmail = async (email) =>
 {
     try
     {
@@ -229,7 +229,7 @@ const GetUserIDByEmail = async (email)=>
     }
 }
 
-const GetUserIDAndPassByEmail = async (email)=>
+const GetUserIDAndPassByEmail = async (email) =>
 {
     try
     {

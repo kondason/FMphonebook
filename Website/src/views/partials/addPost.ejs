@@ -1,12 +1,12 @@
 <div id="modal" class="modal flex-column">
-    <form method="POST" action="/posts/addpost" class="modal-container flex-column">
+    <form method="POST" action="/posts/addPost" class="modal-container flex-column">
         <div class="modal-header">
             <h3>Add Post</h3>
         </div>
         <div class="modal-first-row flex-row">
 
             <select class="form-input form-input-modal" Name="PostTypeID">
-                <% Data.postTypes.forEach(postType=>{ %>
+                <% PostTypes.forEach(postType=>{ %>
                     <option value="<%=postType.PostTypeID%>"><%=postType.PostType%></option>
                 <% })%>
             </select>

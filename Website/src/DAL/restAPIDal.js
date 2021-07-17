@@ -209,6 +209,34 @@ const GetTeamAges = async () =>
     }
 };
 
+const GetUsersByParameters = async (name, email, professionID, clubID, teamAgeID, employmentStatusID) =>
+{
+    try
+    {
+        const response = await axios.post(process.env.BASE_REST_API_PATH + "Users/GetUsersByParameters", { Name: name, Email: email, ProfessionID: professionID, ClubID: clubID, TeamAgeID: teamAgeID, EmploymentStatusID: employmentStatusID });
+        return response.data;
+    } catch (error)
+    {
+        throw error.message;
+    }
+};
+
+const UpdateUser = async (userDetails, requestedUserID) =>
+{
+    try
+    {
+        console.log(userDetails);
+        const response = await axios.put(process.env.BASE_REST_API_PATH + "Users/UpdateUser", { RequestedUserID: requestedUserID, UserDetails: userDetails });
+        console.log(response.data);
+        return response.data;
+    } catch (error)
+    {
+        console.log(error);
+        throw error.message;
+    }
+};
+
+
 module.exports =
 {
     GetProfessions,
@@ -227,5 +255,7 @@ module.exports =
     GetPostTypes,
     AddPost,
     GetTeamAges,
-    GetEmploymentStatuses
+    GetEmploymentStatuses,
+    GetUsersByParameters,
+    UpdateUser
 }

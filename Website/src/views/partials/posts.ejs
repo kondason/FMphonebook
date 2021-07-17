@@ -1,11 +1,11 @@
 <div class="posts-sidebar-container flex-column">
     <div class="posts-header-container flex-row">
         <div class="posts-header">
-            <h3>Last <%=Data.posts.length %> posts</h3>
+            <h3>Last <%=Posts.length %> posts</h3>
         </div>
         <button class="posts-create-post-btn" data-modal-target="#modal"> Add post</button>
     </div>
-    <% Data.posts.forEach(post=>{ %>
+    <% Posts.forEach(post=>{ %>
         <div class="posts-container flex-column">
             <div class="post-container flex-column">
                 <div class="post-content">
@@ -14,11 +14,10 @@
                 <div class="post-author-details flex-row">
                     <div class="author-details-left flex-row">
                         <div class="author-details-author-img-container">
-                            <img class="author-details-author-img" src="/images/Users/<%=user.UserID %>.jpg">
+                            <img class="author-details-author-img" src="/images/Users/<%=post.UserID %>.jpg" onerror="if (this.src != '/images/Users/default.png') this.src = '/images/Users/default.png';">
                         </div>
                         <div class="author-details-author-name">
-                            <%=post.FirstName %>
-                                <%=post.LastName %>
+                            <a href="/Users/<%=post.UserID%>"><%=post.FirstName %> <%=post.LastName %></a>
                         </div>
                     </div>
                     <div class="author-details-post-date">

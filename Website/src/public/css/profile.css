@@ -1,0 +1,191 @@
+.main-container {
+    height: 100%;
+    width: 70%;
+    margin: auto;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-rows: 80px minmax(80px, 250px) minmax(80px, 350px) 30px;
+    grid-template-columns: 0.7fr 1fr;
+    grid-template-areas: "navigation navigation" "generalDetails clubDetails" "generalDetails resume" "footer footer";
+    row-gap: 10px;
+    column-gap: 15px;
+    background-color: #EBF2F6;
+}
+
+.navigation-grid-item {
+    grid-area: navigation;
+}
+
+.general-details-grid-item {
+    margin-left: 15px;
+    grid-area: generalDetails;
+    background-color: white;
+    border-radius: 10px;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.general-details-container {
+    width: 90%;
+    align-content: center;
+    height: 100%;
+    margin-top: 15px;
+    align-items: center;
+}
+
+.profile-image {
+    border-radius: 10px;
+    width: 100%;
+    max-width: 280px;
+    height: 280px;
+}
+
+.general-details-header-container {
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.general-details-header {
+    color: #235266;
+}
+
+.general-details-content-container,.general-details-form-container {
+    width: 100%;
+    height: 100%;
+    justify-content: space-evenly;
+}
+
+.general-details-left, .general-details-right {
+    justify-content: space-evenly;
+}
+
+.club-details-grid-item {
+    grid-area: clubDetails;
+    margin-right: 15px;
+    border-radius: 10px;
+    background-color: white;
+    align-items: center;
+}
+
+.club-details-container {
+    width: 90%;
+    height: 100%;
+}
+
+.club-details-header {
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.club-details-content-container {
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.club-details-content-container {
+    width: 100%;
+    height: 100%;
+}
+
+.club-details-img {
+    border-radius: 50%;
+    border: 1px solid lightgray;
+    width: 150px;
+    height: 150px;
+}
+
+.club-details-content {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.NoClub {
+    width: 100%;
+    text-align: center;
+}
+
+.resume-grid-item {
+    grid-area: resume;
+    margin-right: 15px;
+    background-color: white;
+    border-radius: 10px;
+    align-items: center;
+}
+
+.resume-container {
+    width: 90%;
+    height: 100%;
+}
+
+.resume-header {
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.resume-body-container {
+    width: 100%;
+    height: 100%;
+}
+
+.footer-grid-item {
+    grid-area: footer;
+    width: 100%;
+    height: 100%;
+    background-color: teal;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+
+.edit-profile-btn {
+    background-color: #37AE62;
+    border-radius: 10px;
+    width: 108px;
+    height: 42px;
+    border: none;
+    color: white;
+}
+
+.save-profile-btn {
+    background-color: #428BCA;
+    border-radius: 10px;
+    width: 108px;
+    height: 42px;
+    border: none;
+    color: white;
+}
+
+
+.attribute-with-checkbox{
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.form-checkbox{
+    margin: 0px;
+    margin-left: 5px;
+}
+
+.form-input{
+    width: 100%;    
+}
+
+.hidden {
+    display: none;
+}
+
+label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #235266;
+    padding-bottom: 3px;
+}

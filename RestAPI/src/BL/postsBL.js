@@ -43,7 +43,6 @@ const GetPostTypes = async () =>
 const AddPost = async(userID, postTypeID, body)=>{
     try
     {
-        console.log(userID, postTypeID, body);
         const result = await mysqlDAL.AddPost(userID, postTypeID, body);
 
         const response =

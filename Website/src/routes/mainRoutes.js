@@ -21,15 +21,21 @@ router.get('/', async (req, res) =>
             const employmentStatuses = await employmentStatusesBL.GetEmploymentStatuses();
             const teamAges = await teamAgesBL.GetTeamAges();
 
-            res.status(200).render('index', { "user": req.user, Data: { 
-                                                                        posts: posts.Data,
-                                                                        postTypes: postTypes,
-                                                                        professions: professions.Data,
-                                                                        clubs: clubs.Data,
-                                                                        employmentStatuses: employmentStatuses.Data,
-                                                                        teamAges: teamAges.Data,
-                                                                       }
-                                            });
+            res.status(200).render('index', {
+                "user": req.user,
+                Data: {
+                    Source: "Home",
+                    Posts: posts.Data,
+                    PostTypes: postTypes,
+                    SearchFormData: {
+                        professions: professions.Data,
+                        clubs: clubs.Data,
+                        employmentStatuses: employmentStatuses.Data,
+                        teamAges: teamAges.Data,
+                    },
+                    SearchResults: "start"
+                }
+            });
         }
         else
             res.render("login", { "Errors": [], "OldInputs": "" });
@@ -50,5 +56,6 @@ router.get('/logout', (req, res) =>
         res.status(500).json({ "err": error.message });
     }
 });
+
 
 module.exports = router;

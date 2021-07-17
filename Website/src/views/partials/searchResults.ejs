@@ -1,110 +1,37 @@
 <div class="search-results-container flex-column">
     <div class="search-results-header-container flex-row">
         <h3>Search Results</h3>
-        <h5>Showing 5 results out of XXXX</h5>
+        <% if (SearchResults != "start") { %>
+            <h5>Showing top <%=SearchResults.length%> results</h5>
+        <% } %>
     </div>
     <div class="search-results-grid">
-        <div class="search-results-item flex-column">
-            <div class="item-row-container flex-row">
-                <img class="row-left-item-img" src="/images/Users/<%=user.UserID %>.jpg">
-                <div class="item-row flex-column">
-                    <div class="item-information-row"><span class="information-label">Name:</span> Doron Hine</div>
-                    <div class="item-information-row"><span class="information-label">Club:</span> Doron Hine</div>
+        <% if (SearchResults=="start" ) { %>
+            <div class="search-results-placeholder">Please preform search in order to see results.</div>
+        <% } else if (SearchResults.length==0 ) { %>
+            <div class="search-results-placeholder">No results, please try different criteria.</div>
+        <% } else { %>
+            <% SearchResults.forEach(item=> { %>
+                <div class="search-results-item flex-column">
+                    <div class="item-row-container flex-row">
+                        <img class="row-left-item-img" src="/images/Users/<%=item.UserID %>.jpg">
+                        <div class="item-row flex-column">
+                            <div class="item-information-row"><span class="information-label">Name:</span> <%=item.FirstName %>  <%=item.LastName %></div>
+                            <div class="item-information-row"><span class="information-label">Club:</span> <%=item.Club %></div>
+                        </div>
+                        <div class="item-row flex-column">
+                            <div class="item-information-row"><span class="information-label">Age:</span> <%=item.Club %></div>
+                            <div class="item-information-row"><span class="information-label">Profession:</span> <%=item.Profession %></div>
+                        </div>
+                        <div class="flex-row">
+                            <img class="contact-information-icon mobile <%= (item.PublicMobile) ? '' : 'contact-information-opacity' %>" src="/images/icons/mobile.png"alt="mobile phone"></img>
+                            <img class="contact-information-icon <%= (item.PublicEmail) ? '' : 'contact-information-opacity' %>" src="/images/icons/email48.png" alt="email"></img>
+                        </div>
+                    </div>
                 </div>
-                <div class="item-row flex-column">
-                    <div class="item-information-row"><span class="information-label">Age:</span> Doron Hine</div>
-                    <div class="item-information-row"><span class="information-label">Profession:</span> Doron Hine</div>
-                </div>
-                <div class="flex-row">
-                    <img class="contact-information-icon mobile" src="/images/icons/mobile.png" alt="mobile phone"></img>
-                    <img class="contact-information-icon" src="/images/icons/email48.png" ale="email"></img>
-                </div>
-            </div>
-        </div>
-        <div class="search-results-item flex-column">
-            <div class="item-row-container flex-row">
-                <img class="row-left-item-img" src="/images/Users/<%=user.UserID %>.jpg">
-                <div class="item-row flex-column">
-                    <div class="item-information-row"><span class="information-label">Name:</span> Doron Hine</div>
-                    <div class="item-information-row"><span class="information-label">Club:</span> Doron Hine</div>
-                </div>
-                <div class="item-row flex-column">
-                    <div class="item-information-row"><span class="information-label">Age:</span> Doron Hine</div>
-                    <div class="item-information-row"><span class="information-label">Profession:</span> Doron Hine</div>
-                </div>
-                <div class="flex-row">
-                    <img class="contact-information-icon mobile" src="/images/icons/mobile.png" alt="mobile phone"></img>
-                    <img class="contact-information-icon" src="/images/icons/email48.png" ale="email"></img>
-                </div>
-            </div>
-        </div>
-        <div class="search-results-item flex-column">
-            <div class="item-row-container flex-row">
-                <img class="row-left-item-img" src="/images/Users/<%=user.UserID %>.jpg">
-                <div class="item-row flex-column">
-                    <div class="item-information-row"><span class="information-label">Name:</span> Doron Hine</div>
-                    <div class="item-information-row"><span class="information-label">Club:</span> Doron Hine</div>
-                </div>
-                <div class="item-row flex-column">
-                    <div class="item-information-row"><span class="information-label">Age:</span> Doron Hine</div>
-                    <div class="item-information-row"><span class="information-label">Profession:</span> Doron Hine</div>
-                </div>
-                <div class="flex-row">
-                    <img class="contact-information-icon mobile" src="/images/icons/mobile.png" alt="mobile phone"></img>
-                    <img class="contact-information-icon" src="/images/icons/email48.png" ale="email"></img>
-                </div>
-            </div>
-        </div>
-        <div class="search-results-item flex-column">
-            <div class="item-row-container flex-row">
-                <img class="row-left-item-img" src="/images/Users/<%=user.UserID %>.jpg">
-                <div class="item-row flex-column">
-                    <div class="item-information-row"><span class="information-label">Name:</span> Doron Hine</div>
-                    <div class="item-information-row"><span class="information-label">Club:</span> Doron Hine</div>
-                </div>
-                <div class="item-row flex-column">
-                    <div class="item-information-row"><span class="information-label">Age:</span> Doron Hine</div>
-                    <div class="item-information-row"><span class="information-label">Profession:</span> Doron Hine</div>
-                </div>
-                <div class="flex-row">
-                    <img class="contact-information-icon mobile" src="/images/icons/mobile.png" alt="mobile phone"></img>
-                    <img class="contact-information-icon" src="/images/icons/email48.png" ale="email"></img>
-                </div>
-            </div>
-        </div>
-        <div class="search-results-item flex-column">
-            <div class="item-row-container flex-row">
-                <img class="row-left-item-img" src="/images/Users/<%=user.UserID %>.jpg">
-                <div class="item-row flex-column">
-                    <div class="item-information-row"><span class="information-label">Name:</span> Doron Hine</div>
-                    <div class="item-information-row"><span class="information-label">Club:</span> Doron Hine</div>
-                </div>
-                <div class="item-row flex-column">
-                    <div class="item-information-row"><span class="information-label">Age:</span> Doron Hine</div>
-                    <div class="item-information-row"><span class="information-label">Profession:</span> Doron Hine</div>
-                </div>
-                <div class="flex-row">
-                    <img class="contact-information-icon mobile" src="/images/icons/mobile.png" alt="mobile phone"></img>
-                    <img class="contact-information-icon" src="/images/icons/email48.png" ale="email"></img>
-                </div>
-            </div>
-        </div>
-        <div class="search-results-item flex-column">
-            <div class="item-row-container flex-row">
-                <img class="row-left-item-img" src="/images/Users/<%=user.UserID %>.jpg">
-                <div class="item-row flex-column">
-                    <div class="item-information-row"><span class="information-label">Name:</span> Doron Hine</div>
-                    <div class="item-information-row"><span class="information-label">Club:</span> Doron Hine</div>
-                </div>
-                <div class="item-row flex-column">
-                    <div class="item-information-row"><span class="information-label">Age:</span> Doron Hine</div>
-                    <div class="item-information-row"><span class="information-label">Profession:</span> Doron Hine</div>
-                </div>
-                <div class="flex-row">
-                    <img class="contact-information-icon mobile" src="/images/icons/mobile.png" alt="mobile phone"></img>
-                    <img class="contact-information-icon" src="/images/icons/email48.png" ale="email"></img>
-                </div>
-            </div>
-        </div>
+            <% }) %>
+        <% } %>
+
+
     </div>
 </div>

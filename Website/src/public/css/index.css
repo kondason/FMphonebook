@@ -36,7 +36,7 @@
 
 .footer-grid-item {
     grid-area: footer;
-    background-color: lightskyblue;
+    background-color: white;
     padding-right:15px;
     padding-left:15px;
 }

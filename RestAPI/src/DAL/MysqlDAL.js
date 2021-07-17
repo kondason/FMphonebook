@@ -3,20 +3,20 @@ const mysql = require("../Config/mysql").connection;
 
 /* Users */
 
-const GetUsersByParameters = async (searchParams) =>
+const GetUsersByParameters = async (name, email, professionID, clubID, teamAgeID, employmentStatusID) =>
 {
     try
     {
-        const [rows, fields] = await mysql.execute("call GetUsersByParameters(?,?,?,?,?,?,?)", [
-            searchParams.SportTypeID,
-            searchParams.FirstName,
-            searchParams.LastName,
-            searchParams.ClubID,
-            searchParams.ProfessionID,
-            searchParams.TeamAgeID,
-            searchParams.EmploymentStatusID
-        ])
-        return rows[0];
+        const [rows, fields] = await mysql.execute("call GetUsersByParameters(?,?,?,?,?,?)", [
+            name,
+            email,
+            clubID,
+            professionID,
+            teamAgeID,
+            employmentStatusID
+        ]);
+
+        return rows[0] ;
     } catch (error)
     {
         throw error.sqlMessage;
@@ -100,24 +100,21 @@ const UpdateUser = async (userDetails) =>
 {
     try
     {
-        const [rows, fields] = await mysql.execute('call UpdateUser(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);',
+        const [rows, fields] = await mysql.execute('call UpdateUser(?,?,?,?,?,?,?,?,?,?,?,?,?);',
             [
                 userDetails.UserID,
-                userDetails.Email,
-                userDetails.Password,
-                userDetails.SportTypeID,
-                userDetails.FirstName,
-                userDetails.LastName,
-                userDetails.Birthday,
-                userDetails.ClubID,
-                userDetails.ProfessionID,
-                userDetails.TeamAgeID,
-                userDetails.Resume,
-                userDetails.EmploymentStatusID,
-                userDetails.ProfileEmailURL,
-                userDetails.MobilePhone,
-                userDetails.PublicEmail,
-                userDetails.PublicMobile
+                userDetails.Email === undefined ? null : userDetails.Email,
+                userDetails.FirstName === undefined ? null : userDetails.FirstName,
+                userDetails.LastName === undefined ? null : userDetails.LastName,
+                userDetails.Birthday === undefined ? null : userDetails.Birthday,
+                userDetails.ClubID === undefined ? null : userDetails.ClubID,
+                userDetails.ProfessionID === undefined ? null : userDetails.TeamAgeID,
+                userDetails.TeamAgeID === undefined ? null : userDetails.TeamAgeID,
+                userDetails.Resume === undefined ? null : userDetails.Resume,
+                (userDetails.EmploymentStatusID === undefined || userDetails.EmploymentStatusID == 0) ? null : userDetails.EmploymentStatusID,
+                userDetails.MobilePhone === undefined ? null : userDetails.MobilePhone,
+                userDetails.PublicEmail === undefined ? null : userDetails.PublicEmail,
+                userDetails.PublicMobile === undefined ? null : userDetails.PublicMobile,
             ]);
         return rows;
     } catch (error)

@@ -35,11 +35,12 @@ app.use(session({
 }));
 
 app.use(passport.initialize());
-app.use(passport.session());
 
 app.use('/css', express.static(path.join(__dirname, 'public/css')));
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use('/scripts', express.static(path.join(__dirname, 'public/scripts')));
+
+app.use(passport.session());
 
 app.use('/', mainRouter);
 app.use('/login', loginRouter);

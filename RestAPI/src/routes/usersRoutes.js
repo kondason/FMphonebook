@@ -19,8 +19,16 @@ router.post('/GetUsersByParameters', (async (req, res) =>
 {
     try
     {
-        const result = await userBL.GetUsersByParameters(req.body.SearchParams);
-        return res.status(result.status).json(result);
+        const result = await userBL.GetUsersByParameters(
+                                                            req.body.Name,
+                                                            req.body.Email,
+                                                            req.body.ProfessionID,
+                                                            req.body.ClubID,
+                                                            req.body.TeamAgeID,
+                                                            req.body.EmploymentStatusID
+                                                        );
+
+        return res.status(result.Status).json(result);
     } catch (error)
     {
         res.status(500).json({ "err": error });

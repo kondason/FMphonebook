@@ -10,7 +10,9 @@ router.get('/', async (req, res) =>
     {
         if (req.isAuthenticated())
         {
-            res.status(200).render('posts', { "user": req.user });
+            res.status(200).render('posts', { "user": req.user,Data:{
+                Source:"Posts"
+            } });
         }
         else
             res.render("login", { "Errors": [], "OldInputs": "" });
@@ -20,7 +22,7 @@ router.get('/', async (req, res) =>
     }
 });
 
-router.post('/addpost', async (req, res) =>
+router.post('/addPost', async (req, res) =>
 {
     try
     {

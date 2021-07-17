@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="text/javascript" src="/scripts/trix.js"></script>
+    <script type="text/javascript" src="/scripts/profile.js" defer></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/trix.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/profile.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="grid-container">
+            <div class="navigation-grid-item">
+                <%- include('partials/navigation.ejs',{Source:Data.Source}) %>
+            </div>
+            <div class="general-details-grid-item flex-column">
+                <div class="general-details-container flex-column">
+                    <img class="profile-image" src="/images/Users/<%=Data.UserDetails.UserID%>.jpg"
+                        onerror="if (this.src != '/images/Users/default.png') this.src = '/images/Users/default.png';">
+                    <div class="general-details-header-container flex-row">
+                        <h2 class="general-details-header">General</h2>
+                        <input id="general-details-edit-btn" class="edit-profile-btn" type="button" value="Edit" onclick="ShowGeneralDetailsForm();"/>
+                        <input id="general-details-save-btn" class="save-profile-btn hidden" type="button" value="Save" onclick="SaveGeneralDetailsFormData('<%=Data.UserDetails.UserID%>');"/>
+                    </div>
+                    <div id="general-details-edit-container" class="general-details-content-container flex-row">
+                        <div class="general-details-left flex-column">
+                            <div class="general-details-attribute flex-column">
+                                <label>Full Name</label>
+                                <span id="FullNameSpan">
+                                    <%=Data.UserDetails.FirstName %>
+                                        <%=Data.UserDetails.LastName %>
+                                </span>
+                            </div>
+                            <div id="BirthdayDiv" class="general-details-attribute flex-column">
+                                <label>Birthday</label>
+                                <% if (Data.UserDetails.Birthday=='' ) { %>
+                                    <span>&nbsp; </span>
+                                    <%}else {%>
+                                        <span>
+                                            <%=Data.UserDetails.Birthday%>
+                                        </span>
+                                        <%}%>
+                            </div>
+                            <div class="general-details-attribute flex-column">
+                                <label>Register Date</label>
+                                <span>
+                                    <%=Data.UserDetails.CreationDate%>
+                                </span>
+
+                            </div>
+                        </div>
+                        <div class="general-details-right flex-column">
+                            <div id="EmailDiv" class="general-details-attribute flex-column">
+                                <label>Email</label>
+                                <% if (Data.UserDetails.Email==null ) { %>
+                                    <span>&nbsp; </span>
+                                    <%}else {%>
+                                        <span>
+                                            <%=Data.UserDetails.Email%>
+                                        </span>
+                                        <%}%>
+                            </div>
+                            <div id="MobileDiv" class="general-details-attribute flex-column">
+                                <label>Mobile</label>
+                                <% if (Data.UserDetails.Mobile==null ) { %>
+                                    <span>&nbsp;</span>
+                                    <%}else {%>
+                                        <span>
+                                            <%=Data.UserDetails.Mobile%>
+                                        </span>
+                                        <%}%>
+                            </div>
+                            <div id="EmploymentStatusDiv" class="general-details-attribute flex-column">
+                                <label>Employment Status</label>
+                                <% if (Data.UserDetails.EmploymentStatus==null ) { %>
+                                    <span>&nbsp; </span>
+                                    <%}else {%>
+                                        <span>
+                                            <%=Data.UserDetails.EmploymentStatus%>
+                                        </span>
+                                        <%}%>
+                            </div>
+                        </div>
+                    </div>
+                    <form id="general-details-save-form" class="general-details-form-container flex-row hidden" method="post"
+                        action="/Users/edit/<%=Data.UserDetails.UserID%>">
+                        <div class="general-details-left flex-column">
+                            <div class="general-details-attribute flex-column">
+                                <label>First Name</label>
+                                <input id="FirstNameInput" class="form-input" type="text" value="<%=Data.UserDetails.FirstName%>">
+                            </div>
+                            <div class="general-details-attribute flex-column">
+                                <label>Last Name</label>
+                                <input id="LastNameInput" class="form-input" type="text" value="<%=Data.UserDetails.LastName%>">
+                            </div>
+                            <div class="general-details-attribute flex-column">
+                                <label>Birthday</label>
+                                <input id="BirthdayInput" class="form-input" type="date" value="<%=Data.UserDetails.Birthday%>">
+                            </div>
+                        </div>
+                        <div class="general-details-left flex-column">
+                            <div class="general-details-attribute flex-column">
+                                <label>Email</label>
+                                <div class="flex-row attribute-with-checkbox">
+                                    <input id="EmailInput" class="form-input" type="text" value="<%=Data.UserDetails.Email%>">
+                                    <label class="form-checkbox">Public?</label> <input id="EmailCheckbox" class="form-checkbox" type="checkbox" value="<%=Data.UserDetails.PublicEmail%>">
+                                </div>
+                            </div>
+                            <div class="general-details-attribute flex-column">
+                                <label>Mobile</label>
+                                <div class="attribute-with-checkbox flex-row">
+                                    <input id="MobileInput" class="form-input" type="text" value="<%=Data.UserDetails.Mobile%>">
+                                    <label class="form-checkbox">Public?</label><input id="MobileCheckbox" class="" type="checkbox" value="<%=Data.UserDetails.PublicMobile%>">
+                                </div>
+                            </div>
+                            <div class="general-details-attribute flex-column">
+                                <label>Employment Status</label>
+                                <select id="EmploymentStatusInput" class="form-input">
+                                    <% if (Data.UserDetails.EmploymentStatusID==null ) { %>
+                                        <option value="0" checked>Employment Status</option>
+                                    <%}%>
+                                    <% Data.employmentStatuses.forEach(employmentStatus=>{ %>
+                                        <option value="<%=employmentStatus.EmploymentStatusID%>" <%=employmentStatus.EmploymentStatusID==Data.UserDetails.EmploymentStatusID ? 'selected' : '' %>>
+                                            <%=employmentStatus.EmploymentStatus%>
+                                        </option>
+                                        <% }) %>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="club-details-grid-item flex-column">
+                <div class="club-details-container flex-column">
+                    <div class="club-details-header flex-row">
+                        <h3>Club Details</h3>
+                        <input class="edit-profile-btn" type="button" value="Edit" />
+                    </div>
+                    <div class="club-details-content-container flex-row">
+                        <% if (Data.UserDetails.ClubID ) { %>
+
+                            <img class="club-details-img" src="/images/Clubs/<%=Data.UserDetails.ClubID%>.png"
+                                onerror="if (this.src != '/images/Clubs/default.png') this.src = '/images/Clubs/default.png';">
+                            <div class="club-details-content flex-row">
+                                <div class="club-details-attribute flex-column">
+                                    <label>Club Name</label>
+                                    <span>
+                                        <%=Data.UserDetails.Club%>
+                                    </span>
+                                </div>
+                                <div class="club-details-attribute flex-column">
+                                    <label>Profession</label>
+                                    <% if (Data.UserDetails.Profession==null ) { %>
+                                        <span>&nbsp; </span>
+                                        <%}else {%>
+                                            <span>
+                                                <%=Data.UserDetails.Profession%>
+                                            </span>
+                                            <%}%>
+
+                                </div>
+                                <div class="club-details-attribute flex-column">
+                                    <label>Team Age</label>
+                                    <% if (Data.UserDetails.TeamAge==null ) { %>
+                                        <span>&nbsp; </span>
+                                        <%}else {%>
+                                            <span>
+                                                <%=Data.UserDetails.TeamAge%>
+                                            </span>
+                                            <%}%>
+
+                                </div>
+                            </div>
+                            <%} else {%>
+
+                                <p class="NoClub">
+                                    No associated club.
+                                    </span>
+
+                                    <%}%>
+                    </div>
+                </div>
+            </div>
+            <div class="resume-grid-item flex-column">
+                <div class="resume-container flex-column">
+                    <div class="resume-header flex-row">
+                        <h3>Resume</h3>
+                        <input class="edit-profile-btn" type="button" value="Edit" />
+                    </div>
+                    <div class="resume-container">
+                        <%- Data.UserDetails.Resume%>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-grid-item">
+                <%- include('partials/footer.ejs') %>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
