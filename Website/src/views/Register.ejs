@@ -112,8 +112,8 @@
                 <div class="register-form-terms-container flex-column">
                     <div class="register-form-terms-policy normal-text flex-row">
                         <input type="checkbox" name="PoliceAndTerms" <%= OldInputs.PoliceAndTerms == "on" ? "checked" : ""  %> class="<%= Errors.find(e=>e.param=='PoliceAndTerms') ? 'validation-error-checkbox' : ''%>">
-                        <label for="PoliceAndTerms">i have read and agree to the <a href="" class="inline-anchor">
-                                Terms of Use</a> and <a href="" class="inline-anchor">Privacy Policy</a></label>
+                        <label for="PoliceAndTerms">i have read and agree to the <a href="Terms" class="inline-anchor">
+                                Terms of Use</a> and <a href="/Privacy" class="inline-anchor">Privacy Policy</a></label>
                     </div>
                     <div>
                         <div class="validation-error-text <%= Errors.find(e=>e.param=='PoliceAndTerms') ? 'display-block' : 'hidden'%>"> 

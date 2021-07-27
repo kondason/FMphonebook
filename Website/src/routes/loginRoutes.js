@@ -16,14 +16,16 @@ router.get('/', (async (req, res) =>
             res.redirect('/');
         }
         else
-            res.render("login", { "Errors": [], "OldInputs": "" });
+        {
+            res.render("login", { "Errors": [{ msg: req.flash('error')[0] }], "OldInputs": "" });
+        }
     } catch (error)
     {
         res.status(500).json({ "err": error.message });
     }
 }));
 
-router.post('/',LocalEmailAndPasswordLogin, LoginValidatorResult ,passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }));
+router.post('/', LocalEmailAndPasswordLogin, LoginValidatorResult, passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }));
 
 
 

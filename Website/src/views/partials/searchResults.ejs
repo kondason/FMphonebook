@@ -12,23 +12,26 @@
             <div class="search-results-placeholder">No results, please try different criteria.</div>
         <% } else { %>
             <% SearchResults.forEach(item=> { %>
+                <a href="/Users/<%=item.UserID%>">
                 <div class="search-results-item flex-column">
-                    <div class="item-row-container flex-row">
-                        <img class="row-left-item-img" src="/images/Users/<%=item.UserID %>.jpg">
-                        <div class="item-row flex-column">
-                            <div class="item-information-row"><span class="information-label">Name:</span> <%=item.FirstName %>  <%=item.LastName %></div>
-                            <div class="item-information-row"><span class="information-label">Club:</span> <%=item.Club %></div>
+                    
+                        <div class="item-row-container flex-row">
+                            <img class="row-left-item-img" src="/images/Users/<%=item.UserID %>.jpg" onerror="if (this.src != '/images/Users/default.png') this.src = '/images/Users/default.png'";>
+                            <div class="item-row flex-column">
+                                <div class="item-information-row"><span class="information-label">Name:</span> <%=item.FirstName %>  <%=item.LastName %></div>
+                                <div class="item-information-row"><span class="information-label">Club:</span> <%=item.Club %></div>
+                            </div>
+                            <div class="item-row flex-column">
+                                <div class="item-information-row"><span class="information-label">Age:</span> <%=item.Club %></div>
+                                <div class="item-information-row"><span class="information-label">Profession:</span> <%=item.Profession %></div>
+                            </div>
+                            <div class="flex-row">
+                                <img class="contact-information-icon mobile <%= (item.PublicMobile) ? '' : 'contact-information-opacity' %>" src="/images/icons/mobile.png"alt="mobile phone"></img>
+                                <img class="contact-information-icon <%= (item.PublicEmail) ? '' : 'contact-information-opacity' %>" src="/images/icons/email48.png" alt="email"></img>
+                            </div>
                         </div>
-                        <div class="item-row flex-column">
-                            <div class="item-information-row"><span class="information-label">Age:</span> <%=item.Club %></div>
-                            <div class="item-information-row"><span class="information-label">Profession:</span> <%=item.Profession %></div>
-                        </div>
-                        <div class="flex-row">
-                            <img class="contact-information-icon mobile <%= (item.PublicMobile) ? '' : 'contact-information-opacity' %>" src="/images/icons/mobile.png"alt="mobile phone"></img>
-                            <img class="contact-information-icon <%= (item.PublicEmail) ? '' : 'contact-information-opacity' %>" src="/images/icons/email48.png" alt="email"></img>
-                        </div>
-                    </div>
                 </div>
+            </a>
             <% }) %>
         <% } %>
 

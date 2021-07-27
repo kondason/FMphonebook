@@ -7,31 +7,30 @@
 
 .grid-container {
     display: grid;
-    grid-template-rows: minmax(80px, auto) minmax(80px, 240px) minmax(80px, auto) 30px;
-    grid-template-columns: 2fr 5fr;
-    grid-template-areas: "navigation navigation" "posts searchForm" "posts searchResults" "posts searchResults" "footer footer";
+    grid-template-rows: minmax(80px, auto) minmax(80px, auto) minmax(80px, auto) 60px;
+    grid-auto-columns: auto;
+    grid-template-areas: "navigation" "searchForm" "searchResults" "footer";
     row-gap: 10px;
     column-gap: 15px;
     background-color: #EBF2F6;
 }
 
+
 .navigation-grid-item {
     grid-area: navigation;
-}
 
-.posts-grid-item {
-    grid-area: posts;
-    padding-left:15px;
 }
 
 .search-form-grid-item {
     grid-area: searchForm;
     padding-right:15px;
+    padding-left:15px;
 }
 
 .search-results-grid-item {
     grid-area: searchResults;
     padding-right:15px;
+    padding-left:15px;
 }
 
 .footer-grid-item {

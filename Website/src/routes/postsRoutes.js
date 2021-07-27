@@ -10,9 +10,16 @@ router.get('/', async (req, res) =>
     {
         if (req.isAuthenticated())
         {
-            res.status(200).render('posts', { "user": req.user,Data:{
-                Source:"Posts"
-            } });
+            const posts = await postsBL.GetPosts();
+            const postTypes = await postsBL.GetPostTypes();
+
+            res.status(200).render('posts', {
+                "user": req.user, Data: {
+                    Source: "Posts",
+                    Posts:posts.Data,
+                    PostTypes: postTypes
+                }
+            });
         }
         else
             res.render("login", { "Errors": [], "OldInputs": "" });
@@ -28,9 +35,13 @@ router.post('/addPost', async (req, res) =>
     {
         if (req.isAuthenticated())
         {
+            
             postsBL.AddPost(req.user.UserID, req.body.PostTypeID, req.body.PostBody);
 
-            res.status(200).redirect('/');
+            if (req.body.Source=="Posts")
+                res.status(200).redirect('/Posts');
+            else
+                res.status(200).redirect('/');
         }
         else
             res.render("login", { "Errors": [], "OldInputs": "" });

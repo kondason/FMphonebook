@@ -6,7 +6,7 @@
 
 .grid-container {
     display: grid;
-    grid-template-rows: 80px minmax(80px, 250px) minmax(80px, 350px) 30px;
+    grid-template-rows: 80px minmax(80px, 250px) minmax(80px, 350px);
     grid-template-columns: 0.7fr 1fr;
     grid-template-areas: "navigation navigation" "generalDetails clubDetails" "generalDetails resume" "footer footer";
     row-gap: 10px;
@@ -137,9 +137,6 @@
 
 .footer-grid-item {
     grid-area: footer;
-    width: 100%;
-    height: 100%;
-    background-color: teal;
     padding-right: 15px;
     padding-left: 15px;
 }
@@ -183,9 +180,28 @@
     display: none;
 }
 
+.displayNone{
+    display: none;
+}
+
 label {
     font-weight: bold;
     font-size: 14px;
     color: #235266;
     padding-bottom: 3px;
 }
+
+
+.resume-editor-content{
+    height: 230px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #EAF2FA;
+}
+
+.trix-button--icon-increase-nesting-level,
+.trix-button--icon-decrease-nesting-level,
+.trix-button-group--block-tools,
+.trix-button-group--file-tools,
+.trix-button--icon-link
+ { display: none !important; }

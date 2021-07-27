@@ -7,7 +7,6 @@ router.get('/GetPosts',(async (req, res)=>
 {
     try
     {
-        
         const result = await postsBL.GetPosts();        
         return res.status(result.Status).json(result);
     } catch (error)

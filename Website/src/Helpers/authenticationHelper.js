@@ -1,12 +1,16 @@
 require('dotenv').config();
+const logger = require('./utils');
 var _ = require('lodash');
+
 
 const registerBL = require('../BL/registerBL');
 const usersBL = require('../BL/usersBL');
+const authenticationBL = require('../BL/authenticationBL');
 const imageHelper = require('../Helpers/imageHelper');
-const passwordHelper = require('../Helpers/passwordHelper');
-
 const passport = require('passport');
+
+const axiosConfig = require('../Config/axios');
+
 
 //Social Strategy
 const FacebookStrategy = require('passport-facebook').Strategy;
@@ -23,16 +27,14 @@ passport.use(new LocalStrategy({
     {
         try
         {
-            const result = await usersBL.GetUserIDAndPassByEmail(email);
+            const result = await authenticationBL.AuthenticateUser(1,email, password);
 
-            if (!result)
-                return done(null, false, { message: "email or password is incorrect" });
+            axiosConfig.SetDefaultTokenForRequests(result.Data.token);
 
-            if (await passwordHelper.ComparePassword(password, result.Password)) //check if passwords match
-                return done(null, result); //Successfully logged in
-            else
-                return done(null, false, { message: 'email or password is incorrect' }); //Email exists but password not matched
+            if (result.Data.status)
+                return done(null, { token: result.Data.token, UserID: result.Data.userID }); //Successfully logged in
 
+            return done(null, false, { message: 'email or password is incorrect' });
         } catch (error)
         {
             done(error);
@@ -51,37 +53,36 @@ passport.use(new FacebookStrategy({
         try
         {
             //check if user was create by this login type
-            let responseData = await usersBL.GetUserByLoginTypeObjectID(profile.id);
-            let userObject = responseData[0][0];
+            const responseData = await authenticationBL.AuthenticateUser(2, profile._json.email, profile.id);
 
-            if (userObject)
+            if (responseData.Data.status)
             {
-                return done(null, userObject);
+                return done(null, { token: responseData.Data.token, UserID: responseData.Data.userID }); //Successfully logged in
             }
 
             let userBirthday = new Date(profile._json.birthday).toLocaleDateString("af-ZA");
-            console.log(userBirthday);
 
             //check if user was create by this login type
-            const response = await registerBL.CreateUser(2, profile.id, profile._json.email, null, profile._json.first_name, profile._json.last_name, userBirthday, null, null, null, null);
+            const createResponse = await registerBL.CreateUser(2, profile.id, profile._json.email, null, profile._json.first_name, profile._json.last_name, userBirthday, null, null, null, null);
+            let userObject = '';
 
-            if (response.Status == 500)
-            {
-                const userID = await usersBL.GetUserIDByEmail(profile._json.email);
-                await usersBL.UpdateLoginTypeObjectID(3, profile.id, userID);
+            const result = await authenticationBL.AuthenticateUser(2, profile._json.email, profile.id);
+            userObject = { token: result.Data.token, UserID: result.Data.userID }; //Successfully logged in
 
-                response.Data = userID;
-            }
-            //user were not exists, update his photo with the login type
-            else
+            axiosConfig.SetDefaultTokenForRequests(result.Data.token);
+
+            logger.log('userObject', 'authenticationHelper', 74, userObject);
+
+            if (createResponse.Data.status)
             {
                 const imageStream = await imageHelper.GetImageFromURL(profile.photos[0].value);
-                const userImageURL = await imageHelper.SaveUserImageFromStreamReturnURL(imageStream, response.Data);
-
-                await usersBL.UpdateUserURLImage(userImageURL, response.Data);
+                const userImageURL = await imageHelper.SaveUserImageFromStreamReturnURL(imageStream, createResponse.Data.userID);
+                await usersBL.UpdateUserURLImage(userImageURL, createResponse.Data.userID);
             }
-
-            userObject = { "UserID": response.Data };
+            else
+            {
+                await usersBL.UpdateLoginTypeObjectID(2, profile.id, profile._json.email);
+            }
 
             return done(null, userObject);
         } catch (error)
@@ -101,35 +102,33 @@ passport.use(new GoogleStrategy({
         try
         {
             //check if user was create by this login type
-            let responseData = await usersBL.GetUserByLoginTypeObjectID(profile.id);
-            let userObject = responseData[0][0];
+            const responseData = await authenticationBL.AuthenticateUser(3, profile._json.email, profile.id);
 
-            if (userObject)
+            if (responseData.Data.status)
             {
-                return done(null, userObject);
+                return done(null, { token: responseData.Data.token, UserID: responseData.Data.userID }); //Successfully logged in
             }
 
             //if user not exists with that login type, try to create it
-            const response = await registerBL.CreateUser(3, profile.id, profile._json.email, null, profile._json.given_name, profile._json.family_name, null, null, null, null, null);
+            const createResponse = await registerBL.CreateUser(3, profile.id, profile._json.email, null, profile._json.given_name, profile._json.family_name, null, null, null, null, null);
+            let userObject = '';
+
+            const result = await authenticationBL.AuthenticateUser(3, profile._json.email, profile.id);
+            userObject = { token: result.Data.token, UserID: result.Data.userID }; //Successfully logged in
+
+            axiosConfig.SetDefaultTokenForRequests(result.Data.token);
 
             //user exists with different login type
-            if (response.Status == 500)
+            if (createResponse.Data.status)
             {
-                const userID = await usersBL.GetUserIDByEmail(profile._json.email);
-                await usersBL.UpdateLoginTypeObjectID(3, profile.id, userID);
-
-                response.Data = userID;
+                const imageStream = await imageHelper.GetImageFromURL(profile.photos[0].value);
+                const userImageURL = await imageHelper.SaveUserImageFromStreamReturnURL(imageStream, createResponse.Data.userID);
+                await usersBL.UpdateUserURLImage(userImageURL, createResponse.Data.userID);
             }
-            //user were not exists, update his photo with the login type
             else
             {
-                const imageStream = await imageHelper.GetImageFromURL(profile._json.picture);
-                const userImageURL = await imageHelper.SaveUserImageFromStreamReturnURL(imageStream, response.Data);
-
-                await usersBL.UpdateUserURLImage(userImageURL, response.Data);
+                await usersBL.UpdateLoginTypeObjectID(3, profile.id, profile._json.email);
             }
-
-            userObject = { "UserID": response.Data };
 
             return done(null, userObject);
         } catch (error)
@@ -139,26 +138,26 @@ passport.use(new GoogleStrategy({
     }
 ));
 
-
-
 passport.serializeUser(function (user, done)
 {
     try
     {
-        done(null, user.UserID);
+        done(null, user);
     } catch (error)
     {
         done(error);
     }
 });
 
-passport.deserializeUser(async function (id, done)
+passport.deserializeUser(async function (user, done)
 {
     try
     {
-        const userObject = await usersBL.GetUserByID(id);
+        axiosConfig.SetDefaultTokenForRequests(user.token);
+        const userObject = await usersBL.GetUserByID(user.UserID);
         userObject.FirstName = _.capitalize(userObject.FirstName);
         userObject.LastName = _.capitalize(userObject.LastName);
+        userObject.token = user.token;
 
         return done(null, userObject)
     } catch (error)

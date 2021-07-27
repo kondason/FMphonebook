@@ -6,24 +6,10 @@ const CreateUser = async (loginTypeID,/* only for 3rd party users - Facebook or 
 {
     try
     {
-        const response =
-        {
-            "Status": 500,
-            "Msg": "",
-            "Data": ""
-        };
-
-        const IsEmailExists = await restApiDAL.IsEmailExists(email);
-
-        if (IsEmailExists)
-        {
-            response.Msg = "Email already exist. please try to sign in.";
-            return response;
-        }
-
+        
         if (clubID == 6)
         {
-            
+
             clubID = await restApiDAL.CreateClub(clubOther);
         }
 
@@ -48,9 +34,8 @@ const CreateUser = async (loginTypeID,/* only for 3rd party users - Facebook or 
             "ClubID": clubID,
         };
 
-        response.Data = await restApiDAL.CreateUser(userObject);
-        response.Status = 201;
-
+        const response = await restApiDAL.CreateUser(userObject);
+        
         return response;
     } catch (error)
     {

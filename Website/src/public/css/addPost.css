@@ -89,6 +89,10 @@
     border: 1px solid #EAF2FA;
 }
 
+.hidden{
+display: none;
+}
+
 .trix-button--icon-increase-nesting-level,
 .trix-button--icon-decrease-nesting-level,
 .trix-button-group--block-tools,

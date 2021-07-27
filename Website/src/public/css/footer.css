@@ -1,3 +1,27 @@
-.footer-container{
-
+.footer-container {
+    width: 100%;
+    justify-content: space-between;
+    background-color: #EBF2F6;
+    align-items: center;
 }
+
+.footer-left-side {
+    flex-grow: 0;
+}
+
+.footer-center {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.footer-social-img {
+    width: 45px;
+    height: 45px;
+}
+
+.footer-right-side {
+    justify-content: space-evenly;
+    flex-grow: 0.1;
+}
+
+.footer-link {}

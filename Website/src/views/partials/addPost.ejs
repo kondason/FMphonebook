@@ -1,5 +1,5 @@
 <div id="modal" class="modal flex-column">
-    <form method="POST" action="/posts/addPost" class="modal-container flex-column">
+    <form method="POST" action="/posts/addPost" class="modal-container flex-column ">
         <div class="modal-header">
             <h3>Add Post</h3>
         </div>
@@ -16,6 +16,7 @@
             </div>
 
         </div>
+        <input type="text" class="hidden" value="<%=Source%>" name="Source">
         <input id="formData" type="hidden" name="PostBody">
         <trix-editor placeholder="Enter post content" input="formData" class="modal-post-body"></trix-editor>
     </form>

@@ -1,19 +1,19 @@
 <div class="nav-container flex-row">
     <div class="nav-left flex-row">
-        <a class="nav-left-img-container" href="/"> 
+        <a class="nav-left-img-container" href="/">
             <img src="/images/logo2.png">
         </a>
         <div class="nav-left-background"></div>
     </div>
     <div class="nav-center flex-row">
         <li><a href="/" class="<%=Source=='Home' ? 'active' : '' %>">Home</a></li>
-        <li><a href="/" class="<%=Source=='Search' ? 'active' : '' %>">Browse</a></li>
+        <li><a href="/Users" class="<%=Source=='Users' ? 'active' : '' %>">Browse</a></li>
         <li><a href="/posts" class="<%=Source=='Posts' ? 'active' : '' %>">Posts</a></li>
-        <li><a href="/" class="<%=Source=='Admin' ? 'active' : '' %>">Admin</a></li>
     </div>
 
     <div class="nav-right flex-row">
-        <img class="nav-right-profile-img" src="/images/Users/<%=user.UserID %>.jpg" onerror="if (this.src != '/images/Users/default.png') this.src = '/images/Users/default.png';">
+        <img class="nav-right-profile-img" src="/images/Users/<%=user.UserID %>.jpg"
+            onerror="if (this.src != '/images/Users/default.png') this.src = '/images/Users/default.png';">
         <li class="small-text"><a href="/Users/<%=user.UserID %>">
                 <%=user.FirstName %>
                     <%=user.LastName %>

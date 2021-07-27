@@ -1,4 +1,5 @@
 const mysqlDAL = require('../DAL/MysqlDAL');
+const jwtHelper = require('../helpers/jwtHelper');
 
 const GetUsersByParameters = async (name, email, professionID, clubID, teamAgeID, employmentStatusID) =>
 {
@@ -39,16 +40,32 @@ const GetUserByID = async (userID) =>
     }
 };
 
-const GetUserByLoginTypeObjectID = async (loginTypeObjectID) =>
+const GetUserByLoginTypeObjectID = async (loginTypeID, loginTypeObjectID) =>
 {
     try
     {
-        const result = await mysqlDAL.GetUserByLoginTypeObjectID(loginTypeObjectID);
+        const result = await mysqlDAL.GetUserByLoginTypeObjectID(loginTypeID, loginTypeObjectID);
+        resultData = result[0][0];
+
+        let token = '';
+        let status = false
+
+        if (resultData)
+        {
+            token = jwtHelper.CreateJTWToken(resultData.UserID);
+            status = true;
+        }
+
+
         const response =
         {
             "Status": 200,
             "Msg": "",
-            "Data": result
+            "Data": {
+                status: status,
+                token: token,
+                userID: resultData ? resultData.UserID : ''
+            }
         };
 
         return response;
@@ -62,18 +79,39 @@ const CreateUser = async (userDetails) =>
 {
     try
     {
-        const result = await mysqlDAL.CreateUser(userDetails);
-
         const response =
         {
-            "Status": 201,
-            "Msg": "",
-            "Data": result
+            "Status": 200,
+            "Msg": "Email already exist. please try to sign in.",
+            "Data": {
+                status: false,
+                token: '',
+                userID: ''
+            }
         };
+
+        const isUserExist = await mysqlDAL.IsEmailExists(userDetails.Email);
+
+        if (isUserExist > 0)
+        {
+            return response;
+        }
+
+        const userID = await mysqlDAL.CreateUser(userDetails);
+
+        if (userID)
+        {
+            response.Status = 201,
+                response.Msg = 'Created.',
+                response.Data.token = jwtHelper.CreateJTWToken(userID);
+            response.Data.status = true;
+            response.Data.userID = userID;
+        }
 
         return response;
     } catch (error)
     {
+        console.log(error);
         throw error;
     }
 };

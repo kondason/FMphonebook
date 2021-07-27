@@ -8,15 +8,15 @@ const GetUsersByParameters = async (name, email, professionID, clubID, teamAgeID
     try
     {
         const [rows, fields] = await mysql.execute("call GetUsersByParameters(?,?,?,?,?,?)", [
-            name,
-            email,
-            clubID,
-            professionID,
-            teamAgeID,
-            employmentStatusID
+            name === undefined ? '' : name,
+            email === undefined ? '' : email,
+            clubID === undefined ? 0 : clubID,
+            professionID === undefined ? 0 : professionID,
+            teamAgeID === undefined ? 0 : teamAgeID,
+            employmentStatusID === undefined ? 0 : employmentStatusID
         ]);
 
-        return rows[0] ;
+        return rows[0];
     } catch (error)
     {
         throw error.sqlMessage;
@@ -35,11 +35,11 @@ const GetUserByID = async (userID) =>
     }
 }
 
-const GetUserByLoginTypeObjectID = async (loginTypeObjectID) =>
+const GetUserByLoginTypeObjectID = async (loginTypeID,loginTypeObjectID) =>
 {
     try
     {
-        const [rows, fields] = await mysql.query("call GetUserByLoginTypeObjectID(?)", loginTypeObjectID);
+        const [rows, fields] = await mysql.query("call GetUserByLoginTypeObjectID(?,?)", [loginTypeID,loginTypeObjectID]);
         return rows;
     } catch (error)
     {
@@ -63,11 +63,10 @@ const CreateUser = async (userDetails) =>
                 userDetails.ClubID === undefined ? null : userDetails.ClubID,
                 userDetails.ProfessionID === undefined ? null : userDetails.ProfessionID
             ]);
-
         return rows.insertId;
     } catch (error)
     {
-        throw error.sqlMessage;
+        throw e.sqlMessage;
     }
 }
 
@@ -107,9 +106,9 @@ const UpdateUser = async (userDetails) =>
                 userDetails.FirstName === undefined ? null : userDetails.FirstName,
                 userDetails.LastName === undefined ? null : userDetails.LastName,
                 userDetails.Birthday === undefined ? null : userDetails.Birthday,
-                userDetails.ClubID === undefined ? null : userDetails.ClubID,
-                userDetails.ProfessionID === undefined ? null : userDetails.TeamAgeID,
-                userDetails.TeamAgeID === undefined ? null : userDetails.TeamAgeID,
+                (userDetails.ClubID === undefined || userDetails.ClubID == 0) ? null : userDetails.ClubID,
+                (userDetails.ProfessionID === undefined || userDetails.ProfessionID == 0) ? null : userDetails.ProfessionID,
+                (userDetails.TeamAgeID === undefined || userDetails.TeamAgeID == 0) ? null : userDetails.TeamAgeID,
                 userDetails.Resume === undefined ? null : userDetails.Resume,
                 (userDetails.EmploymentStatusID === undefined || userDetails.EmploymentStatusID == 0) ? null : userDetails.EmploymentStatusID,
                 userDetails.MobilePhone === undefined ? null : userDetails.MobilePhone,
@@ -148,11 +147,11 @@ const UpdateUserURLImage = async (userID, imageURL) =>
     }
 };
 
-const UpdateLoginTypeObjectID = async (loginTypeID, loginTypeObjectID, userID) =>
+const UpdateLoginTypeObjectID = async (loginTypeID, loginTypeObjectID, email) =>
 {
     try
     {
-        const [rows, fields] = await mysql.execute('update Users set LoginTypeID = ? , LoginTypeObjectID = ? where UserID = ?', [loginTypeID, loginTypeObjectID, userID]);
+        const [rows, fields] = await mysql.execute('update Users set LoginTypeID = ? , LoginTypeObjectID = ? where Email = ?', [loginTypeID, loginTypeObjectID, email]);
         return rows;
     } catch (error)
     {
@@ -176,7 +175,7 @@ const GetUserIDAndPassByEmail = async (email) =>
 {
     try
     {
-        const [rows, fields] = await mysql.execute('select UserID,Password from Users where Email = ?', [email]);
+        const [rows, fields] = await mysql.query('select UserID,Password from Users where Email = ?', [email]);
         return rows[0];
     } catch (error)
     {
@@ -184,7 +183,17 @@ const GetUserIDAndPassByEmail = async (email) =>
     }
 }
 
-
+const GetUserIDBySocialDetails = async (loginTypeID, email, profileID) =>
+{
+    try
+    {
+        const [rows, fields] = await mysql.query('select UserID from Users where Email = ? and LoginTypeID = ? and LoginTypeObjectID = ?', [email,loginTypeID,profileID]);
+        return rows[0];
+    } catch (error)
+    {
+        throw error.sqlMessage;
+    }
+}
 
 /* Posts */
 const GetPosts = async () =>
@@ -314,6 +323,7 @@ module.exports =
     UpdateLoginTypeObjectID,
     GetUserIDByEmail,
     GetUserIDAndPassByEmail,
+    GetUserIDBySocialDetails,
 
     /* Posts */
     GetPosts,

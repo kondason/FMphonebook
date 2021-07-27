@@ -1,0 +1,125 @@
+.main-container {
+    height: 100%;
+    width: 70%;
+    margin: auto;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-rows: minmax(80px, auto) minmax(80px, auto) 60px;
+    grid-template-areas: "navigation" "content" "footer";
+    row-gap: 10px;
+    column-gap: 15px;
+    background-color: #EBF2F6;
+}
+
+.posts-grid-item {
+    grid-area: content;
+    margin-left: 15px;
+    margin-right: 15px;
+    background-color: white;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.posts-header-container {
+    justify-content: space-between;
+    width: 95%;
+    height: 100%;
+    align-items: center;
+}
+
+.posts-header {
+    color: #235266;
+}
+
+.add-post-btn {
+    background-color: #37AE62;
+    border-radius: 10px;
+    width: 158px;
+    height: 42px;
+    border: none;
+    color: white;
+    margin-right: 10px;
+}
+
+.posts-container {
+    background-color: white;
+    width: 95%;
+    height: 100%;
+    flex-wrap: wrap;
+}
+
+.post-item {
+    background-color: #EBF2F6;
+    height: 150px;
+    width: 150px;
+    flex-grow: 1;
+    max-width: 290px;
+    min-width: 260px;
+    border-radius: 10px;
+    margin: 10px;
+    justify-content: space-between;
+}
+
+.post-content {
+    max-height: 170px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    text-align: justify;
+    text-justify: inter-word;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 8px;
+    color: black !important;
+    font-weight: normal !important;
+}
+
+.post-author-details {
+    padding-top: 10px;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 5px;
+}
+
+.author-details-left {
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+
+.author-details-author-img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.author-details-author-name {
+    margin-left: 10px;
+}
+
+.author-details-post-date {
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+
+
+
+
+
+.footer-grid-item {
+    grid-area: footer;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.navigation-grid-item {
+    grid-area: navigation;
+}

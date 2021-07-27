@@ -1,6 +1,7 @@
 const { check, validationResult } = require('express-validator');
 const usersBL = require('../../BL/usersBL');
-const registerBL = require('../../BL/registerBL');
+const professionsBL = require('../../BL/professionsBL');
+const clubsBL = require('../../BL/clubsBL');
 
 const RegisterValidatorResult = async (req, res, next) =>
 {
@@ -10,8 +11,8 @@ const RegisterValidatorResult = async (req, res, next) =>
         next();
     else
     {
-        const professions = await registerBL.GetProfessions();
-        const clubs = await registerBL.GetClubs();
+        const professions = await professionsBL.GetProfessions();
+        const clubs = await clubsBL.GetClubs();
 
         const oldInputs =
         {

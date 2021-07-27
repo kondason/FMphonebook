@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 
+const flash = require('connect-flash');
 const https = require('https');
 const app = express();
 const path = require('path'); 
@@ -12,6 +13,8 @@ const registerRouter = require('./routes/registerRoutes');
 const authRouter = require('./routes/authRoutes');
 const postsRouter = require('./routes/postsRoutes');
 const usersRouter = require('./routes/usersRoutes');
+const privacyRouter = require('./routes/privacyRoutes');
+const termsRouter = require('./routes/termsRoutes');
 
 const passport = require('passport');
 const mysqlSessionStore = require('./Config/mysqlSessionStore').sessionStore;
@@ -34,12 +37,12 @@ app.use(session({
     store: mysqlSessionStore
 }));
 
-app.use(passport.initialize());
-
 app.use('/css', express.static(path.join(__dirname, 'public/css')));
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use('/scripts', express.static(path.join(__dirname, 'public/scripts')));
 
+app.use(flash());
+app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', mainRouter);
@@ -48,6 +51,8 @@ app.use('/register', registerRouter);
 app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
 app.use('/users', usersRouter);
+app.use('/privacy', privacyRouter);
+app.use('/terms', termsRouter);
 
 
 https.createServer({key:privateKey,cert:certificate},app).listen(4000);

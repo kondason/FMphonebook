@@ -11,7 +11,7 @@ router.post('/GetUserByID', (async (req, res) =>
         return res.status(result.Status).json(result);
     } catch (error)
     {
-        res.status(500).json({ "err": error });
+        res.status(500).json({ "err": error.message });
     }
 }));
 
@@ -112,7 +112,7 @@ router.post('/UpdateLoginTypeObjectID', (async (req, res) =>
 {
     try
     {
-        const result = await userBL.UpdateLoginTypeObjectID(req.body.LoginTypeID,req.body.LoginTypeObjectID,req.body.UserID);
+        const result = await userBL.UpdateLoginTypeObjectID(req.body.LoginTypeID,req.body.LoginTypeObjectID,req.body.Email);
         return res.status(result.Status).json(result);
     } catch (error)
     {

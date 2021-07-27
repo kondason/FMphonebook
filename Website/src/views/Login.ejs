@@ -22,18 +22,18 @@
             <form action="/login/" method="post" class="login-inputs-container flex-column" novalidate>
                 <div class="login-inputs-container flex-column">
 
+                    
+                    <div class="login-form-email">
+                        <input type="email"
+                            class="login-form-input <%= Errors.find(e=>e.param=='Email') ? 'validation-error' : ''%>"
+                            placeholder="E-mail" name="Email" value="<%= OldInputs.Email %>">
+                    </div>
                     <div class="validation-error-text-container flex-column <%= Errors ? 'display-block' : 'hidden' %>">
                         <% Errors.forEach(e=> { %>
                             <div class="error-message"><%= e.msg %></div>
                         <% }) %>
 
                     </div>
-                    <div class="login-form-email">
-                        <input type="email"
-                            class="login-form-input <%= Errors.find(e=>e.param=='Email') ? 'validation-error' : ''%>"
-                            placeholder="E-mail" name="Email" value="<%= OldInputs.Email %>">
-                    </div>
-
                     <div class="login-form-password">
                         <input type="password"
                             class="login-form-input <%= Errors.find(e=>e.param=='Password') ? 'validation-error' : ''%>" placeholder="Password" name="Password" value="<%= OldInputs.Password %>">

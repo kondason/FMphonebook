@@ -1,5 +1,6 @@
 const { default: axios } = require('axios');
 
+
 require('dotenv').config();
 
 const GetProfessions = async () =>
@@ -32,7 +33,7 @@ const CreateUser = async (userObject) =>
     {
         const response = await axios.post(process.env.BASE_REST_API_PATH + "Users/CreateUser", { "UserDetails": userObject });
 
-        return response.data.Data;
+        return response.data;
     } catch (error)
     {
         throw error;
@@ -87,11 +88,11 @@ const GetUserByID = async (userID) =>
     }
 };
 
-const GetUserByLoginTypeObjectID = async (loginTypeObjectID) =>
+const GetUserByLoginTypeObjectID = async (loginTypeID,loginTypeObjectID) =>
 {
     try
     {
-        const response = await axios.post(process.env.BASE_REST_API_PATH + "Users/GetUserByLoginTypeObjectID", { "LoginTypeObjectID": loginTypeObjectID });
+        const response = await axios.post(process.env.BASE_REST_API_PATH + "Users/GetUserByLoginTypeObjectID", { "LoginTypeID":loginTypeID,"LoginTypeObjectID": loginTypeObjectID });
         return response.data.Data;
     } catch (error)
     {
@@ -111,11 +112,11 @@ const UpdateUserURLImage = async (imageURL, userID) =>
     }
 };
 
-const UpdateLoginTypeObjectID = async (loginTypeID, loginTypeObjectID, userID) =>
+const UpdateLoginTypeObjectID = async (loginTypeID, loginTypeObjectID, email) =>
 {
     try 
     {
-        const response = await axios.post(process.env.BASE_REST_API_PATH + "Users/UpdateLoginTypeObjectID", { "LoginTypeID": loginTypeID, "LoginTypeObjectID": loginTypeObjectID, "UserID": userID });
+        const response = await axios.post(process.env.BASE_REST_API_PATH + "Users/UpdateLoginTypeObjectID", { "LoginTypeID": loginTypeID, "LoginTypeObjectID": loginTypeObjectID, "Email": email });
         return response.data.Data;
     } catch (error)
     {
@@ -135,17 +136,6 @@ const GetUserIDByEmail = async (email) =>
     }
 }
 
-const GetUserIDAndPassByEmail = async (email) =>
-{
-    try 
-    {
-        const response = await axios.post(process.env.BASE_REST_API_PATH + "Users/GetUserIDAndPassByEmail", { "Email": email });
-        return response.data.Data;
-    } catch (error)
-    {
-        throw error
-    }
-};
 
 const GetPosts = async () =>
 {
@@ -225,17 +215,26 @@ const UpdateUser = async (userDetails, requestedUserID) =>
 {
     try
     {
-        console.log(userDetails);
+
         const response = await axios.put(process.env.BASE_REST_API_PATH + "Users/UpdateUser", { RequestedUserID: requestedUserID, UserDetails: userDetails });
-        console.log(response.data);
         return response.data;
     } catch (error)
     {
-        console.log(error);
         throw error.message;
     }
 };
 
+const AuthenticateUser = async (loginTypeID,email, passwordOrProfileID) =>
+{
+    try
+    {
+        const response = await axios.post(process.env.BASE_REST_API_PATH + "Authentication/AuthenticateUser", { LoginTypeID: loginTypeID,Email: email, Password: passwordOrProfileID });
+        return response.data;
+    } catch (error)
+    {
+        throw error.message;
+    }
+}
 
 module.exports =
 {
@@ -250,12 +249,12 @@ module.exports =
     UpdateUserURLImage,
     UpdateLoginTypeObjectID,
     GetUserIDByEmail,
-    GetUserIDAndPassByEmail,
     GetPosts,
     GetPostTypes,
     AddPost,
     GetTeamAges,
     GetEmploymentStatuses,
     GetUsersByParameters,
-    UpdateUser
+    UpdateUser,
+    AuthenticateUser
 }

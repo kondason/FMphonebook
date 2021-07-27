@@ -30,8 +30,11 @@
                         onerror="if (this.src != '/images/Users/default.png') this.src = '/images/Users/default.png';">
                     <div class="general-details-header-container flex-row">
                         <h2 class="general-details-header">General</h2>
-                        <input id="general-details-edit-btn" class="edit-profile-btn" type="button" value="Edit" onclick="ShowGeneralDetailsForm();"/>
-                        <input id="general-details-save-btn" class="save-profile-btn hidden" type="button" value="Save" onclick="SaveGeneralDetailsFormData('<%=Data.UserDetails.UserID%>');"/>
+                        <input id="general-details-edit-btn"
+                            class="edit-profile-btn <%=Data.UserDetails.UserID != user.UserID ? 'hidden' : ''%>"
+                            type="button" value="Edit" onclick="ShowGeneralDetailsForm();" />
+                        <input id="general-details-save-btn" class="save-profile-btn hidden" type="button" value="Save"
+                            onclick="SaveGeneralDetailsFormData('<%=Data.UserDetails.UserID%>');" />
                     </div>
                     <div id="general-details-edit-container" class="general-details-content-container flex-row">
                         <div class="general-details-left flex-column">
@@ -93,35 +96,42 @@
                             </div>
                         </div>
                     </div>
-                    <form id="general-details-save-form" class="general-details-form-container flex-row hidden" method="post"
-                        action="/Users/edit/<%=Data.UserDetails.UserID%>">
+                    <form id="general-details-save-form" class="general-details-form-container flex-row hidden"
+                        method="post" action="/Users/edit/<%=Data.UserDetails.UserID%>">
                         <div class="general-details-left flex-column">
                             <div class="general-details-attribute flex-column">
                                 <label>First Name</label>
-                                <input id="FirstNameInput" class="form-input" type="text" value="<%=Data.UserDetails.FirstName%>">
+                                <input id="FirstNameInput" class="form-input" type="text"
+                                    value="<%=Data.UserDetails.FirstName%>">
                             </div>
                             <div class="general-details-attribute flex-column">
                                 <label>Last Name</label>
-                                <input id="LastNameInput" class="form-input" type="text" value="<%=Data.UserDetails.LastName%>">
+                                <input id="LastNameInput" class="form-input" type="text"
+                                    value="<%=Data.UserDetails.LastName%>">
                             </div>
                             <div class="general-details-attribute flex-column">
                                 <label>Birthday</label>
-                                <input id="BirthdayInput" class="form-input" type="date" value="<%=Data.UserDetails.Birthday%>">
+                                <input id="BirthdayInput" class="form-input" type="date"
+                                    value="<%=Data.UserDetails.Birthday%>">
                             </div>
                         </div>
                         <div class="general-details-left flex-column">
                             <div class="general-details-attribute flex-column">
                                 <label>Email</label>
                                 <div class="flex-row attribute-with-checkbox">
-                                    <input id="EmailInput" class="form-input" type="text" value="<%=Data.UserDetails.Email%>">
-                                    <label class="form-checkbox">Public?</label> <input id="EmailCheckbox" class="form-checkbox" type="checkbox" value="<%=Data.UserDetails.PublicEmail%>">
+                                    <input id="EmailInput" class="form-input" type="text"
+                                        value="<%=Data.UserDetails.Email%>">
+                                    <label class="form-checkbox">Public?</label> <input id="EmailCheckbox"
+                                        class="form-checkbox" type="checkbox" value="<%=Data.UserDetails.PublicEmail%>">
                                 </div>
                             </div>
                             <div class="general-details-attribute flex-column">
                                 <label>Mobile</label>
                                 <div class="attribute-with-checkbox flex-row">
-                                    <input id="MobileInput" class="form-input" type="text" value="<%=Data.UserDetails.Mobile%>">
-                                    <label class="form-checkbox">Public?</label><input id="MobileCheckbox" class="" type="checkbox" value="<%=Data.UserDetails.PublicMobile%>">
+                                    <input id="MobileInput" class="form-input" type="text"
+                                        value="<%=Data.UserDetails.Mobile%>">
+                                    <label class="form-checkbox">Public?</label><input id="MobileCheckbox" class=""
+                                        type="checkbox" value="<%=Data.UserDetails.PublicMobile%>">
                                 </div>
                             </div>
                             <div class="general-details-attribute flex-column">
@@ -129,12 +139,14 @@
                                 <select id="EmploymentStatusInput" class="form-input">
                                     <% if (Data.UserDetails.EmploymentStatusID==null ) { %>
                                         <option value="0" checked>Employment Status</option>
-                                    <%}%>
-                                    <% Data.employmentStatuses.forEach(employmentStatus=>{ %>
-                                        <option value="<%=employmentStatus.EmploymentStatusID%>" <%=employmentStatus.EmploymentStatusID==Data.UserDetails.EmploymentStatusID ? 'selected' : '' %>>
-                                            <%=employmentStatus.EmploymentStatus%>
-                                        </option>
-                                        <% }) %>
+                                        <%}%>
+                                            <% Data.employmentStatuses.forEach(employmentStatus=>{ %>
+                                                <option value="<%=employmentStatus.EmploymentStatusID%>"
+                                                    <%=employmentStatus.EmploymentStatusID==Data.UserDetails.EmploymentStatusID
+                                                    ? 'selected' : '' %>>
+                                                    <%=employmentStatus.EmploymentStatus%>
+                                                </option>
+                                                <% }) %>
                                 </select>
                             </div>
                         </div>
@@ -145,34 +157,33 @@
                 <div class="club-details-container flex-column">
                     <div class="club-details-header flex-row">
                         <h3>Club Details</h3>
-                        <input class="edit-profile-btn" type="button" value="Edit" />
+                        <input id="club-details-edit-btn" class="edit-profile-btn <%=Data.UserDetails.UserID != user.UserID ? 'hidden' : ''%>" type="button" value="Edit" onclick="ShowClubDetailsForm();" />
+                        <input id="club-details-save-btn" class="save-profile-btn hidden" type="button" value="Save" onclick="SaveClubDetailsFormData('<%=Data.UserDetails.UserID%>');" />
                     </div>
-                    <div class="club-details-content-container flex-row">
-                        <% if (Data.UserDetails.ClubID ) { %>
+                    <div id="club-details-edit-container" class="">
+                        <div class="club-details-content-container flex-row <%= (Data.UserDetails.ClubID) ? '' : 'hidden' %>">
 
-                            <img class="club-details-img" src="/images/Clubs/<%=Data.UserDetails.ClubID%>.png"
-                                onerror="if (this.src != '/images/Clubs/default.png') this.src = '/images/Clubs/default.png';">
+                            <img id="club-details-img-edit" class="club-details-img" src="/images/Clubs/<%=Data.UserDetails.ClubID%>.png" onerror="if (this.src != '/images/Clubs/default.png') this.src = '/images/Clubs/default.png';">
                             <div class="club-details-content flex-row">
                                 <div class="club-details-attribute flex-column">
                                     <label>Club Name</label>
-                                    <span>
+                                    <span id="ClubSpan">
                                         <%=Data.UserDetails.Club%>
                                     </span>
                                 </div>
-                                <div class="club-details-attribute flex-column">
+                                <div id="ProfessionDiv" class="club-details-attribute flex-column">
                                     <label>Profession</label>
-                                    <% if (Data.UserDetails.Profession==null ) { %>
+                                    <% if (Data.UserDetails.ProfessionID==null ) { %>
                                         <span>&nbsp; </span>
                                         <%}else {%>
                                             <span>
                                                 <%=Data.UserDetails.Profession%>
                                             </span>
                                             <%}%>
-
                                 </div>
-                                <div class="club-details-attribute flex-column">
+                                <div id="TeamAgeDiv" class="club-details-attribute flex-column">
                                     <label>Team Age</label>
-                                    <% if (Data.UserDetails.TeamAge==null ) { %>
+                                    <% if (Data.UserDetails.TeamAgeID==null ) { %>
                                         <span>&nbsp; </span>
                                         <%}else {%>
                                             <span>
@@ -182,24 +193,79 @@
 
                                 </div>
                             </div>
-                            <%} else {%>
-
-                                <p class="NoClub">
-                                    No associated club.
-                                    </span>
-
-                                    <%}%>
+                        </div>
+                        <span ID="NoClub" class="NoClub <%= (Data.UserDetails.ClubID) ? 'displayNone' : '' %>">
+                            No associated club.
+                        </span>
                     </div>
+                    <form id="club-details-save-form" class="club-details-form-container flex-row hidden" method="post"
+                        action="/Users/edit/<%=Data.UserDetails.UserID%>">
+                        <img id="club-details-img-form" class="club-details-img"
+                            src="/images/Clubs/<%=Data.UserDetails.ClubID%>.png"
+                            onerror="if (this.src != '/images/Clubs/default.png') this.src = '/images/Clubs/default.png';">
+
+                        <div class="club-details-content flex-row">
+                            <div class="club-details-attribute flex-column">
+                                <label>Club Name</label>
+                                <select id="ClubInput" class="form-input" onchange="LoadClubIcon()">
+                                    <% if (Data.UserDetails.ClubID==null ) { %>
+                                        <option value="0" checked>Clubs</option>
+                                        <%}%>
+                                            <% Data.clubs.forEach(club=>{ %>
+                                                <option value="<%=club.ClubID%>" <%=club.ClubID==Data.UserDetails.ClubID
+                                                    ? 'selected' : '' %>>
+                                                    <%=club.Club%>
+                                                </option>
+                                                <% }) %>
+                                </select>
+                            </div>
+                            <div class="club-details-attribute flex-column">
+                                <label>Profession</label>
+                                <select id="ProfessionInput" class="form-input">
+                                    <% if (Data.UserDetails.ProfessionID==null ) { %>
+                                        <option value="0" checked>Professions</option>
+                                        <%}%>
+                                            <% Data.professions.forEach(profession=>{ %>
+                                                <option value="<%=profession.ProfessionID%>"
+                                                    <%=profession.ProfessionID==Data.UserDetails.ProfessionID
+                                                    ? 'selected' : '' %>>
+                                                    <%=profession.Profession%>
+                                                </option>
+                                                <% }) %>
+                                </select>
+                            </div>
+                            <div class="club-details-attribute flex-column">
+                                <label>Team Age</label>
+                                <select id="TeamAgeInput" class="form-input">
+                                    <% if (Data.UserDetails.TeamAgeID==null ) { %>
+                                        <option value="0" checked>Team Age</option>
+                                        <%}%>
+                                            <% Data.teamAges.forEach(teamAge=>{ %>
+                                                <option value="<%=teamAge.TeamAgeID%>"
+                                                    <%=teamAge.TeamAgeID==Data.UserDetails.TeamAgeID ? 'selected' : ''
+                                                    %>>
+                                                    <%=teamAge.TeamAge%>
+                                                </option>
+                                                <% }) %>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="resume-grid-item flex-column">
                 <div class="resume-container flex-column">
                     <div class="resume-header flex-row">
                         <h3>Resume</h3>
-                        <input class="edit-profile-btn" type="button" value="Edit" />
+                        <input id="resume-edit-btn" class="edit-profile-btn <%=Data.UserDetails.UserID != user.UserID ? 'hidden' : ''%>" type="button" value="Edit" onclick="ShowResumeDetailsForm();" />
+                        <input id="resume-save-btn" class="save-profile-btn hidden" type="button" value="Save" onclick="SaveResumeDetailsFormData('<%=Data.UserDetails.UserID%>');" />
                     </div>
-                    <div class="resume-container">
+                    <div id="resume-container" class="resume-body-container">
                         <%- Data.UserDetails.Resume%>
+                    </div>
+                    <div id="resume-editor" class="resume-body-container hidden">
+                        <input id="formData" type="hidden" value="<%= Data.UserDetails.Resume%>" name="PostBody">
+                        <trix-editor placeholder="Enter post content" input="formData" class="resume-editor-content"></trix-editor>
                     </div>
                 </div>
             </div>

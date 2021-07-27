@@ -1,0 +1,42 @@
+<form class="search-form-container flex-column" action="<%=SearchFormData.actionURL%>" method="post">
+    <div class="search-form-header-container flex-row">
+        <div class="search-form-header">
+            <h3>Search Staff</h3>
+        </div>
+    </div>
+    <div class="search-form-inputs-container flex-column">
+        <div class="search-form-row flex-row">
+            <input id="nameInput" class="form-input" type="text" placeholder="Name" name="Name">
+            <input id="emailInput" class="form-input" type="text" placeholder="Email" Name="Email">
+            <select id="professionInput" name="ProfessionID" class="form-input">
+                <option value="0">All Professions</option>
+                <% SearchFormData.professions.forEach(profession=>{ %>
+                    <option value="<%= profession.ProfessionID %>"><%= profession.Profession%></option>
+                <%})%>
+            </select>
+        </div>
+        <div class="search-form-row flex-row">
+            <select id="clubInput" name="ClubID" class="form-input">
+                <option value="0">All Clubs</option>
+                <% SearchFormData.clubs.forEach(club=>{ %>
+                    <option value="<%= club.ClubID %>"><%= club.Club%></option> <%})%>
+            </select>
+            <select id="teamAgeInput" name="TeamAgeID" class="form-input">
+                <option value="0">All Ages</option>
+                <% SearchFormData.teamAges.forEach(teamAge=>{ %>
+                    <option value="<%= teamAge.TeamAgeID %>"><%= teamAge.TeamAge%></option>
+                <%})%>
+            </select>
+            <select id="employmentStatusInput" name="EmploymentStatusID" class="form-input">
+                <option value="0">All Employment Statuses</option>
+                <% SearchFormData.employmentStatuses.forEach(employmentStatus=>{ %>
+                    <option value="<%= employmentStatus.EmploymentStatusID %>"><%= employmentStatus.EmploymentStatus%></option>
+                <%})%>
+            </select>
+        </div>
+        <div class="search-form-btn-row flex-row">
+            <button id="search-btn-search-form" class="search-form-submit-btn" type="submit">Search</button>
+            <button id="clear-search-form" class="search-form-Clear-btn" type="button">Clear</button>
+        </div>
+    </div>
+</form>

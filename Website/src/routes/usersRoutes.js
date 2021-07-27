@@ -15,7 +15,7 @@ router.post('/edit/:id', async (req, res) =>
     {
         if (req.isAuthenticated())
         {
-            const result = await usersBL.UpdateUser(req.body,req.params.id,req.user.UserID);
+            const result = await usersBL.UpdateUser(req.body, req.params.id, req.user.UserID);
             res.status(result.Status).json(result);
         } else
             res.render("login", { "Errors": [], "OldInputs": "" });
@@ -38,13 +38,14 @@ router.get('/:id', async (req, res) =>
             const clubs = await clubsBL.GetClubs();
             const teamAges = await teamAgesBL.GetTeamAges();
 
-            const Data = {
+            console.log({
                 UserDetails: userDetails,
                 professions: professions.Data,
                 clubs: clubs.Data,
                 employmentStatuses: employmentStatuses.Data,
                 teamAges: teamAges.Data
-            };
+            });
+            
             res.status(200).render('profile', {
                 "user": req.user, "Data": {
                     UserDetails: userDetails,
@@ -63,30 +64,27 @@ router.get('/:id', async (req, res) =>
     }
 });
 
-router.post('/Search', async (req, res) =>
+router.get('/', async (req, res) =>
 {
     try
     {
+        const professions = await professionsBL.GetProfessions();
+        const clubs = await clubsBL.GetClubs();
+        const employmentStatuses = await employmentStatusesBL.GetEmploymentStatuses();
+        const teamAges = await teamAgesBL.GetTeamAges();
+        const searchResults = await usersBL.GetUsersByParameters();
+
         if (req.isAuthenticated())
         {
-            const searchResults = await usersBL.GetUsersByParameters(req.body.Name, req.body.Email, req.body.ProfessionID, req.body.ClubID, req.body.TeamAgeID, req.body.EmploymentStatusID);
-            const posts = await postsBL.GetPosts(10);
-            const postTypes = await postsBL.GetPostTypes();
-            const professions = await professionsBL.GetProfessions();
-            const clubs = await clubsBL.GetClubs();
-            const employmentStatuses = await employmentStatusesBL.GetEmploymentStatuses();
-            const teamAges = await teamAgesBL.GetTeamAges();
-
-            res.status(200).render('index', {
-                "user": req.user,
-                Data: {
-                    Posts: posts.Data,
-                    PostTypes: postTypes,
+            res.status(200).render('search', {
+                "user": req.user, "Data": {
+                    Source: "Users",
                     SearchFormData: {
                         professions: professions.Data,
                         clubs: clubs.Data,
                         employmentStatuses: employmentStatuses.Data,
-                        teamAges: teamAges.Data
+                        teamAges: teamAges.Data,
+                        actionURL: "/Users/search"
                     },
                     SearchResults: searchResults.Data
                 }
@@ -99,5 +97,6 @@ router.post('/Search', async (req, res) =>
         res.status(500).json({ "err": error.message });
     }
 });
+
 
 module.exports = router;

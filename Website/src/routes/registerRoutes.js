@@ -15,6 +15,7 @@ router.get('/', (async (req, res) =>
             res.redirect('index');
         else
         {
+            
             const professions = await professionsBL.GetProfessions();
             const clubs = await clubsBL.GetClubs();
 

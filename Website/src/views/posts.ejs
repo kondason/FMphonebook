@@ -5,10 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
 
+    <script type="text/javascript" src="/scripts/trix.js"></script>
+    <script type="text/javascript" src="/scripts/addPost.js" defer></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/trix.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
     <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/nav.css">    
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/postsBrowse.css">
+    <link rel="stylesheet" href="/css/addPost.css">
     <title>Document</title>
 </head>
 
@@ -18,9 +25,47 @@
             <div class="navigation-grid-item">
                 <%- include('partials/navigation.ejs',{Source:Data.Source}) %>
             </div>
-         posts
+            <div class="posts-grid-item flex-column">
+                <div class="posts-header-container flex-row">
+                    <h2 class="posts-header">Posts (<%=Data.Posts.length%>)</h2>
+                    <input class="add-post-btn" data-modal-target="#modal" type="button" value="Add Post" />
+                </div>
+                <div class="posts-container flex-row">
+                    <% Data.Posts.forEach(post=>{ %>
+                        <div class="post-item flex-column">
+
+                            
+                                <a class="post-content" href="/Posts/<%=post.PostID%>">
+                                    <%-post.body %>
+                                </a>
+                            
+                            <div class="post-author-details flex-row">
+                                <div class="author-details-left flex-row">
+                                    <div class="author-details-author-img-container">
+                                        <img class="author-details-author-img" src="/images/Users/<%=post.UserID %>.jpg"
+                                            onerror="if (this.src != '/images/Users/default.png') this.src = '/images/Users/default.png';">
+                                    </div>
+                                    <div class="author-details-author-name">
+                                        <a href="/Users/<%=post.UserID%>">
+                                            <%=post.FirstName %>
+                                                <%=post.LastName %>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="author-details-post-date">
+                                    <%=post.CreationDate %>
+                                </div>
+                            </div>
+
+                        </div>
+                        <%})%>
+                </div>
+            </div>
             <div class="footer-grid-item">
-                footer
+                <%- include('partials/footer.ejs') %>
+            </div>
+            <div class="add-post-modal">
+                <%- include('partials/addPost.ejs',{PostTypes:Data.PostTypes,Source:Data.Source }); %>
             </div>
         </div>
     </div>
