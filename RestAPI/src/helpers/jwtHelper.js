@@ -5,6 +5,8 @@ const CreateJTWToken = (userID) =>
 {
     try
     {
+        console.log(userID);
+        
         const payload =
         {
             sub: userID,
