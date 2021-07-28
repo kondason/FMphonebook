@@ -45,7 +45,7 @@ passport.use(new LocalStrategy({
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "https://localhost:4000/auth/facebook/callback",
+    callbackURL: process.env.FACEBOOK_CALLBACK_URI,
     profileFields: ['first_name,last_name,picture.type(large),birthday,email,gender']
 },
     async function (accessToken, refreshToken, profile, done)
@@ -95,7 +95,7 @@ passport.use(new FacebookStrategy({
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_APP_ID,
     clientSecret: process.env.GOOGLE_APP_SECRET,
-    callbackURL: "https://localhost:4000/auth/google/callback"
+    callbackURL: process.env.GOOGLE_CALLBACK_URI
 },
     async function (accessToken, refreshToken, profile, done)
     {
