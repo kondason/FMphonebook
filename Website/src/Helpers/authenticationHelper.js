@@ -67,12 +67,6 @@ passport.use(new FacebookStrategy({
             const createResponse = await registerBL.CreateUser(2, profile.id, profile._json.email, null, profile._json.first_name, profile._json.last_name, userBirthday, null, null, null, null);
             let userObject = '';
 
-            const result = await authenticationBL.AuthenticateUser(2, profile._json.email, profile.id);
-            userObject = { token: result.Data.token, UserID: result.Data.userID }; //Successfully logged in
-
-            axiosConfig.SetDefaultTokenForRequests(result.Data.token);
-
-
             if (createResponse.Data.status)
             {
                 const imageStream = await imageHelper.GetImageFromURL(profile.photos[0].value);
@@ -83,6 +77,10 @@ passport.use(new FacebookStrategy({
             {
                 await usersBL.UpdateLoginTypeObjectID(2, profile.id, profile._json.email);
             }
+
+            const result = await authenticationBL.AuthenticateUser(2, profile._json.email, profile.id);
+            userObject = { token: result.Data.token, UserID: result.Data.userID }; //Successfully logged in
+            axiosConfig.SetDefaultTokenForRequests(result.Data.token);
 
             return done(null, userObject);
         } catch (error)
@@ -112,14 +110,7 @@ passport.use(new GoogleStrategy({
             //if user not exists with that login type, try to create it
             const createResponse = await registerBL.CreateUser(3, profile.id, profile._json.email, null, profile._json.given_name, profile._json.family_name, null, null, null, null, null);
             let userObject = '';
-
-            const result = await authenticationBL.AuthenticateUser(3, profile._json.email, profile.id);
-            userObject = { token: result.Data.token, UserID: result.Data.userID }; //Successfully logged in
-
-            axiosConfig.SetDefaultTokenForRequests(result.Data.token);
-
-            
-
+        
             //user exists with different login type
             if (createResponse.Data.status)
             {
@@ -131,6 +122,10 @@ passport.use(new GoogleStrategy({
             {
                 await usersBL.UpdateLoginTypeObjectID(3, profile.id, profile._json.email);
             }
+
+            const result = await authenticationBL.AuthenticateUser(3, profile._json.email, profile.id);
+            userObject = { token: result.Data.token, UserID: result.Data.userID }; //Successfully logged in
+            axiosConfig.SetDefaultTokenForRequests(result.Data.token);
 
             return done(null, userObject);
         } catch (error)

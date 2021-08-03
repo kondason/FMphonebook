@@ -36,6 +36,7 @@ const IgnoreToken = async (req, res, next) =>
         const nonSecurePaths = [
             '/Authentication/AuthenticateUser',
             '/Users/IsEmailExists',
+            '/Users/UpdateLoginTypeObjectID',
             '/Users/CreateUser',
             '/Professions/GetProfessions',
             '/Professions/CreateProfession',
