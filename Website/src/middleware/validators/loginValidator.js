@@ -22,10 +22,11 @@ const LoginValidatorResult = async (req, res, next) =>
 const LocalEmailAndPasswordLogin = [
     check('Email').custom(async (value) =>
     {
-        const result = await usersBL.IsEmailExists(value);        
-        if (!result)
+        const result = await usersBL.IsEmailExists(value);
+
+        if (result < 1)
             return Promise.reject();
-            
+
     }).withMessage("Email or password is Incorrect"),
     check('Password').notEmpty().withMessage("You muse enter email & password in order to login"),
 ];

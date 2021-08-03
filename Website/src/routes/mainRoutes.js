@@ -43,7 +43,6 @@ router.get('/', async (req, res) =>
             res.render("login", { "Errors": [], "OldInputs": "" });
     } catch (error)
     {
-        console.log(error);
         res.status(500).json({ "err": error.message });
     }
 });

@@ -19,7 +19,6 @@ const VerifyToken = async (req, res, next) =>
 
         if (!isVerified)
         {
-            console.log(req);
             res.status(401).json({ Data: "Invalid token" });
         }
         next();
@@ -36,9 +35,12 @@ const IgnoreToken = async (req, res, next) =>
     {
         const nonSecurePaths = [
             '/Authentication/AuthenticateUser',
+            '/Users/IsEmailExists',
             '/Users/CreateUser',
             '/Professions/GetProfessions',
+            '/Professions/CreateProfession',
             '/Clubs/GetClubs',
+            '/Clubs/CreateClub',
             '/Terms',
             '/Privacy',
 

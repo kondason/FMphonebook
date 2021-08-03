@@ -27,8 +27,9 @@ passport.use(new LocalStrategy({
     {
         try
         {
+            
             const result = await authenticationBL.AuthenticateUser(1,email, password);
-
+            
             axiosConfig.SetDefaultTokenForRequests(result.Data.token);
 
             if (result.Data.status)
@@ -71,7 +72,6 @@ passport.use(new FacebookStrategy({
 
             axiosConfig.SetDefaultTokenForRequests(result.Data.token);
 
-            logger.log('userObject', 'authenticationHelper', 74, userObject);
 
             if (createResponse.Data.status)
             {
@@ -117,6 +117,8 @@ passport.use(new GoogleStrategy({
             userObject = { token: result.Data.token, UserID: result.Data.userID }; //Successfully logged in
 
             axiosConfig.SetDefaultTokenForRequests(result.Data.token);
+
+            
 
             //user exists with different login type
             if (createResponse.Data.status)

@@ -21,7 +21,6 @@ router.post('/edit/:id', async (req, res) =>
             res.render("login", { "Errors": [], "OldInputs": "" });
     } catch (error)
     {
-        console.log('2');
         res.status(500).json({ "err": error.message });
     }
 });
@@ -37,14 +36,6 @@ router.get('/:id', async (req, res) =>
             const professions = await professionsBL.GetProfessions();
             const clubs = await clubsBL.GetClubs();
             const teamAges = await teamAgesBL.GetTeamAges();
-
-            console.log({
-                UserDetails: userDetails,
-                professions: professions.Data,
-                clubs: clubs.Data,
-                employmentStatuses: employmentStatuses.Data,
-                teamAges: teamAges.Data
-            });
             
             res.status(200).render('profile', {
                 "user": req.user, "Data": {

@@ -55,7 +55,6 @@ const AddPost = async(userID, postTypeID, body)=>{
         return response;
     } catch (error)
     {
-        console.log(error);
         return error;
     }
 };

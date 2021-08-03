@@ -15,7 +15,7 @@ const GetImageFromURL = async (imageUrl) =>
         return streamImage.data;
     } catch (error)
     {
-        console.log(error);
+        throw error;
     }
 };
 
@@ -30,7 +30,7 @@ const SaveUserImageFromStreamReturnURL = async (streamImage, userID) =>
         return path;
     } catch (error)
     {
-        console.log(error);
+        throw error;
     }
 };
 

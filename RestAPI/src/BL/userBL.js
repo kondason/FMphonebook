@@ -85,7 +85,6 @@ const CreateUser = async (userDetails) =>
             "Msg": "Email already exist. please try to sign in.",
             "Data": {
                 status: false,
-                token: '',
                 userID: ''
             }
         };
@@ -103,7 +102,6 @@ const CreateUser = async (userDetails) =>
         {
             response.Status = 201,
                 response.Msg = 'Created.',
-                response.Data.token = jwtHelper.CreateJTWToken(userID);
             response.Data.status = true;
             response.Data.userID = userID;
         }
@@ -111,7 +109,6 @@ const CreateUser = async (userDetails) =>
         return response;
     } catch (error)
     {
-        console.log(error);
         throw error;
     }
 };

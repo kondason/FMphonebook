@@ -18,8 +18,6 @@ const CreateJTWToken = (userID) =>
         };
 
         const signedToken = jwt.sign(payload, process.env.JWT_SECRET_KEY, signOptions);
-
-        console.log(signedToken);
         
         return signedToken;
     } catch (error)

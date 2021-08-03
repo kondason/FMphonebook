@@ -37,8 +37,8 @@ const UserPasswordRegValidatorMiddleware = [
     check('Email').custom(async (value) =>
     {
         const result = await usersBL.IsEmailExists(value);
-        
-        if (result)
+
+        if (result > 0)
             return Promise.reject();
 
     }).withMessage("Email already exist. please try to sign in."),

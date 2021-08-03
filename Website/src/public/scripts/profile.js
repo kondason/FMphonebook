@@ -72,7 +72,7 @@ async function SaveGeneralDetailsFormData(userID)
 
         birthdaySpans.forEach(span =>
         {
-            console.log(BirthdayDiv);
+            
             span.innerHTML = birthdayInput;
         });
 
