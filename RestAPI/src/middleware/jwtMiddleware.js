@@ -34,6 +34,7 @@ const IgnoreToken = async (req, res, next) =>
     try
     {
         const nonSecurePaths = [
+            '/ebay/MarketplaceAccountDeletion',
             '/Authentication/AuthenticateUser',
             '/Users/IsEmailExists',
             '/Users/UpdateLoginTypeObjectID',
