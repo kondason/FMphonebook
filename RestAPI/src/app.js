@@ -7,6 +7,7 @@ const professionsRouter = require ('./routes/professionsRoutes');
 const employmentStatusesRouter = require ('./routes/employmentStatusesRoutes');
 const teamAgesRouter = require ('./routes/teamAgesRoutes');
 const authenticationRouter = require ('./routes/authenticationRoutes');
+const ebayRouter = require ('./routes/ebayRoutes');
 const compression = require('compression');
 
 const jwtMiddleware = require ('./middleware/jwtMiddleware');
@@ -31,6 +32,7 @@ app.use('/clubs/', clubsRouter);
 app.use('/professions/', professionsRouter);
 app.use('/employmentStatuses/', employmentStatusesRouter);
 app.use('/teamAges/', teamAgesRouter);
-app.use('/authentication',authenticationRouter)
+app.use('/authentication',authenticationRouter);
+app.use('/ebay',ebayRouter);
 
 app.listen(3000);
